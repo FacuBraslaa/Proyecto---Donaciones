@@ -1,0 +1,36 @@
+pgAdmin 4
+=========
+
+pgAdmin 4 is a rewrite of pgAdmin III (see below) in Python/Javascript. It is
+able to be run either in it's own C++ based Desktop Runtime, or as a web
+application for multiple users.
+
+pgAdmin 3
+=========
+
+pgAdmin 3 is a database design and management application for use with 
+PostgreSQL. It is written in C++ using the wxWidgets (http://www.wxwidgets.org)
+cross-platform framework to allow it to run on multiple platforms.
+
+pgAdmin 3 is no longer being maintained.
+
+pgAdmin 2
+=========
+
+pgAdmin 2 was written in Visual Basic 6 and was supported only on Windows. It
+is included here for interests sake only and is completely unsupported.
+
+pgAgent
+=======
+
+pgAgent is a job scheduler for PostgreSQL that works with pgAdmin. This directory
+contains source code tarballs. It is recommended that users obtain binaries of
+pgAgent either through StackBuilder if using EDB Installers for PostgreSQL, or
+from their choice of alternate packager (RPM, DEB etc.).
+
+General
+=======
+
+pgAdmin is released under the PostgreSQL Licence.
+
+Please visit http://www.pgadmin.org/ for more details. 
