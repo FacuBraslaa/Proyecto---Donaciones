@@ -1,6 +1,6 @@
 import mysql from "mysq12/promise";
 
-export cont conn = await mysql.createConection({
+export const conn = await mysql.createConection({
     host:"localhost",
     user: "root",
     password: "rootroot",
