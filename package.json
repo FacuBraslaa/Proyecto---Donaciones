@@ -1,5 +1,40 @@
 {
+  "name": "proyecto---donaciones",
+  "version": "1.0.0",
+  "description": "pgAdmin 4 =========",
+  "main": "index.js",
+  "type": "module",
   "dependencies": {
-    "@vercel/postgres": "^0.9.0"
-  }
+    "bufferutil": "^4.0.8",
+    "express": "^4.19.2",
+    "node-gyp-build": "^4.8.1",
+    "obuf": "^1.1.2",
+    "pg-int8": "^1.0.1",
+    "pg-numeric": "^1.0.2",
+    "pg-protocol": "^1.6.1",
+    "pg-types": "^4.0.2",
+    "postgres-array": "^3.0.2",
+    "postgres-bytea": "^3.0.0",
+    "postgres-date": "^2.1.0",
+    "postgres-interval": "^3.0.0",
+    "postgres-range": "^1.1.4",
+    "undici-types": "^6.13.0",
+    "utf-8-validate": "^6.0.4",
+    "ws": "^8.18.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "npx nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FacuBraslaa/Proyecto---Donaciones.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FacuBraslaa/Proyecto---Donaciones/issues"
+  },
+  "homepage": "https://github.com/FacuBraslaa/Proyecto---Donaciones#readme"
 }
