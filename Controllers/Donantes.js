@@ -1,9 +1,15 @@
-import express from "express";
-import {client} from "./dbconfig.js";
+import { Client } from '../.dbconfig.js'
 
-const app = express();
-app.use(express.json());
+//obtener todos los donantes 
 
-app.get("/chau", async (req,res)=>{
-    res.send('Chau')
-})
+
+const getDonantes = async () => {
+    try {
+      const res = await client.query('SELECT * FROM donantes');
+      console.log(res.rows); // Muestra los resultados en la consola
+    } catch (err) {
+      console.error('Error ejecutando la consulta', err.stack);
+    } finally {
+      client.end(); // Cierra la conexión
+    }
+}

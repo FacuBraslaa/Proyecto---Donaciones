@@ -11,5 +11,5 @@ app.get("/chau", (_, res) => {
 });
 
 app.listen(3000, ()=>{
-    console.log("Example app listening in port 3000")
+    console.log("Mano a Mano app listening in port 3000")
 })
