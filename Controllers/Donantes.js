@@ -1,11 +1,11 @@
-import { Client } from '../.dbconfig.js'
-
+import { client } from '../dbconfig.js'
+import pg from "pg" // Importamos el cliente de pg (recordar que para utilizar 'import' es necesario usar "type": "module" en el package.json)
 //obtener todos los donantes 
 
 
 const getDonantes = async () => {
     try {
-      const res = await client.query('SELECT * FROM donantes');
+      const res = await Client.query('SELECT * FROM donantes');
       console.log(res.rows); // Muestra los resultados en la consola
     } catch (err) {
       console.error('Error ejecutando la consulta', err.stack);
@@ -56,11 +56,11 @@ const getDonantes = async () => {
         res.json({ idDonantes, nombreUsuario, contraseña, gmail, numeroWhatsapp, nombre, apellido, fechaNacimiento, direccion, codigoPostal });
     };
     
-    alldonantes: async (req, res) => {
+  const alldonantes = async (req, res) => {
       let query = 'SELECT * FROM public.donantes';
 
       try {
-          const result = await client.query(query);
+          const result = await Client.query(query);
           res.json(result);
       } catch (err) {
           console.error('Error al requerir donantes:', err); // Imprime el error en la consola
@@ -68,7 +68,7 @@ const getDonantes = async () => {
       }
   }
 
-  idDonantes: async (req, res) => {
+  const idDonantes = async (req, res) => {
     const id = req.params.id;
     let query = "SELECT * FROM public.Donante WHERE id = $1";
 
@@ -129,18 +129,47 @@ const updateDonante = async (req, res) => {
   }
 };
 
-deleteDonante: async (req, res) => {
+const deleteDonante = async (req, res) => {
   const id = req.params.id;
 
   const query = 'DELETE FROM public.Donante WHERE id = $1';
 
   try {
-      await client.query(query, [id]);
+      await Client.query(query, [id]);
       res.send("Donante Eliminado Correctamente");
   } catch (err) {
       console.error('Error al eliminar Donante:', err); // Imprime el error en la consola
       res.status(500).json({ message: "Error al eliminar Donante", err: err.message });
   }
 }
-  
 
+const donantesByUser = async (req, res) => {
+  const id = req.params.id;
+
+  const query = 'SELECT * FROM public.donantes WHERE id_user = $1';
+
+  try {
+      const result = await Client.query(query, [id]);
+      if (result.rows.length > 0) {
+          res.json(result.rows);
+      } else {
+          res.status(404).json({ message: "Usuario no encontrado" });
+      }
+  } catch (err) {
+      console.error('Error al requerir usuario:', err); // Imprime el error en la consola
+      res.status(500).json({ message: "Error al requerir usuario", err: err.message });
+  }
+}
+
+  
+const donantes = {
+
+  getDonantes,
+  updateDonante,
+  createDonante,
+  idDonantes, 
+  deleteDonante,
+  donantesByUser, 
+  alldonantes,
+}
+export default donantes

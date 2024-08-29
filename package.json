@@ -6,9 +6,11 @@
   "type": "module",
   "dependencies": {
     "bufferutil": "^4.0.8",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "node-gyp-build": "^4.8.1",
     "obuf": "^1.1.2",
+    "pg": "^8.12.0",
     "pg-int8": "^1.0.1",
     "pg-numeric": "^1.0.2",
     "pg-protocol": "^1.6.1",
