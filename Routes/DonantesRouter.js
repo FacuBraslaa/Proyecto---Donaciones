@@ -3,24 +3,25 @@ const router = express.Router();
 
 import Donantes from "../Controllers/Donantes.js";
 
-// Crear paciente
+// Crear donante
 router.post("/registerDonante", Donantes.createDonante);
 
-// Devolver todos los pacientes
+// Devolver todos los donantes
 router.get("/allDonantes", Donantes.alldonantes);
 
-// Devolver paciente especifico
+// Devolver donante específico
 router.get("/Donante/:id", Donantes.idDonantes);
 
-// Editar Paciente Existente
+// Editar donante existente
 router.put("/updateDonante/:id", Donantes.updateDonante);
 
-// Eliminar Paciente Existente
+// Eliminar donante existente
 router.delete("/deleteDonante/:id", Donantes.deleteDonante);
 
-// Ver todos los pacientes de un usuario
+// Ver todos los donantes de un usuario
 router.get("/donantesByUser/:id", Donantes.donantesByUser);
 
+// Obtener todos los donantes (función adicional)
 router.get("/getDonantes", Donantes.getDonantes);
 
 export default router;
