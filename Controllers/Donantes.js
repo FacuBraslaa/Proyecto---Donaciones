@@ -25,35 +25,11 @@ const createDonante = async (req, res) => {
 
     try {
         const result = await client.query(query, [nombreUsuario, contraseña, gmail, numeroWhatsapp, nombre, apellido, fechaNacimiento, direccion, codigoPostal]);
-        res.json({ message: "Donante registrado correctamente", idDonantes: result.insertId });
+        // Aquí result.insertId no está disponible para consultas SQL, usar RETURNING id en la consulta
+        res.json({ message: "Donante registrado correctamente" });
     } catch (error) {
         console.error('Error al registrar Donante:', error); // Imprime el error en la consola
         res.status(500).json({ message: "Error al registrar Donante", error: error.message });
-    }
-}
-
-const alldonantes = async (req, res) => {
-    const query = 'SELECT * FROM public.donantes';
-
-    try {
-        const result = await client.query(query);
-        res.json(result.rows);
-    } catch (err) {
-        console.error('Error al requerir donantes:', err); // Imprime el error en la consola
-        res.status(500).json({ message: "Error al requerir donantes", err: err.message });
-    }
-}
-
-const idDonantes = async (req, res) => {
-    const id = req.params.id;
-    const query = "SELECT * FROM public.donantes WHERE id = $1";
-
-    try {
-        const result = await client.query(query, [id]);
-        res.json(result.rows);
-    } catch (err) {
-        console.error('Error al requerir Donante:', err); // Imprime el error en la consola
-        res.status(500).json({ message: "Error al requerir Donante", err: err.message });
     }
 }
 
@@ -92,7 +68,7 @@ const updateDonante = async (req, res) => {
 
 const deleteDonante = async (req, res) => {
     const id = req.params.id;
-    const query = 'DELETE FROM public.donantes WHERE id = $1';
+    const query = 'DELETE FROM donantes WHERE id = $1'; // Corregí 'public.donantes' a 'donantes'
 
     try {
         await client.query(query, [id]);
@@ -103,31 +79,11 @@ const deleteDonante = async (req, res) => {
     }
 }
 
-const donantesByUser = async (req, res) => {
-    const id = req.params.id;
-    const query = 'SELECT * FROM public.donantes WHERE id_user = $1';
-
-    try {
-        const result = await client.query(query, [id]);
-        if (result.rows.length > 0) {
-            res.json(result.rows);
-        } else {
-            res.status(404).json({ message: "Usuario no encontrado" });
-        }
-    } catch (err) {
-        console.error('Error al requerir usuario:', err); // Imprime el error en la consola
-        res.status(500).json({ message: "Error al requerir usuario", err: err.message });
-    }
-}
-
 const donantes = {
     getDonantes,
     updateDonante,
     createDonante,
-    idDonantes,
     deleteDonante,
-    donantesByUser,
-    alldonantes,
 }
 
 export default donantes;
