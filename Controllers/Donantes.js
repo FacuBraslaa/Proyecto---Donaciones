@@ -81,6 +81,66 @@ const getDonantes = async () => {
     }
 }
 
+const updateDonante = async (req, res) => {
 
+  /*
+      {
+          "nombreUsuario": "Nombre de usuario",
+          "contraseña": "Contraseña",
+          "gmail": "correo@example.com",
+          "numeroWhatsapp": "+1234567890",
+          "nombre": "Nombre",
+          "apellido": "Apellido",
+          "fechaNacimiento": "YYYY-MM-DD",
+          "direccion": "Calle Falsa 123",
+          "codigoPostal": "12345"
+      }
+  */
+
+  const { nombreUsuario, contraseña, gmail, numeroWhatsapp, nombre, apellido, fechaNacimiento, direccion, codigoPostal } = req.body;
+
+  // Actualiza los datos en la tabla 'donantes'
+  const query = `
+      UPDATE donantes 
+      SET 
+          contraseña = ?, 
+          gmail = ?, 
+          numero_whatsapp = ?, 
+          nombre = ?, 
+          apellido = ?, 
+          fecha_nacimiento = ?, 
+          direccion = ?, 
+          codigo_postal = ? 
+      WHERE 
+          nombre_usuario = ?
+  `;
+
+  try {
+      const result = await conn.query(query, [contraseña, gmail, numeroWhatsapp, nombre, apellido, fechaNacimiento, direccion, codigoPostal, nombreUsuario]);
+      
+      if (result.affectedRows > 0) {
+          res.json({ message: "Donante actualizado correctamente" });
+      } else {
+          res.status(404).json({ message: "Donante no encontrado" });
+      }
+  } catch (error) {
+      console.error('Error al actualizar Donante:', error); // Imprime el error en la consola
+      res.status(500).json({ message: "Error al actualizar Donante", error: error.message });
+  }
+};
+
+deleteDonante: async (req, res) => {
+  const id = req.params.id;
+
+  const query = 'DELETE FROM public.Donante WHERE id = $1';
+
+  try {
+      await client.query(query, [id]);
+      res.send("Donante Eliminado Correctamente");
+  } catch (err) {
+      console.error('Error al eliminar Donante:', err); // Imprime el error en la consola
+      res.status(500).json({ message: "Error al eliminar Donante", err: err.message });
+  }
+}
   
 
