@@ -1,13 +1,7 @@
-import { client } from '../dbconfig.js';
-import pg from 'pg'; // Importa correctamente el cliente de pg (asegúrate de que sea necesario)
-
-const { Pool } = pg;
-const pool = new Pool(); // Si estás usando pool, configúralo según tu configuración
-
 // Obtener todos los donantes
 const getDonantes = async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM donantes');
+        const result = await client.query('SELECT * FROM public."donantes"');
         res.json(result.rows); // Envía los resultados como respuesta
     } catch (err) {
         console.error('Error ejecutando la consulta', err.stack);
@@ -27,7 +21,7 @@ const createDonante = async (req, res) => {
     `;
 
     try {
-        const result = await pool.query(query, [nombreUsuario, contraseña, gmail, numeroWhatsapp, nombre, apellido, fechaNacimiento, direccion, codigoPostal]);
+        const result = await client.query(query, [nombreUsuario, contraseña, gmail, numeroWhatsapp, nombre, apellido, fechaNacimiento, direccion, codigoPostal]);
         res.json({ message: "Donante registrado correctamente", idDonante: result.rows[0].id });
     } catch (error) {
         console.error('Error al registrar Donante:', error);
@@ -55,7 +49,7 @@ const updateDonante = async (req, res) => {
     `;
 
     try {
-        const result = await pool.query(query, [contraseña, gmail, numeroWhatsapp, nombre, apellido, fechaNacimiento, direccion, codigoPostal, nombreUsuario]);
+        const result = await client.query(query, [contraseña, gmail, numeroWhatsapp, nombre, apellido, fechaNacimiento, direccion, codigoPostal, nombreUsuario]);
 
         if (result.rowCount > 0) {
             res.json({ message: "Donante actualizado correctamente" });
@@ -74,7 +68,7 @@ const deleteDonante = async (req, res) => {
     const query = 'DELETE FROM donantes WHERE id = $1';
 
     try {
-        const result = await pool.query(query, [id]);
+        const result = await client.query(query, [id]);
         if (result.rowCount > 0) {
             res.send("Donante Eliminado Correctamente");
         } else {
@@ -92,7 +86,7 @@ const donantesById = async (req, res) => {
     const query = 'SELECT * FROM donantes WHERE id_user = $1';
 
     try {
-        const result = await pool.query(query, [id]);
+        const result = await client.query(query, [id]);
         if (result.rows.length > 0) {
             res.json(result.rows);
         } else {
