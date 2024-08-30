@@ -1,13 +1,19 @@
+import { client } from '../dbconfig.js';
+import pg from 'pg'; 
+
+const { Pool } = pg;
+const pool = new Pool(); // Configura Pool según tu configuración de base de datos
+
 // Obtener todos los donantes
 const getDonantes = async (req, res) => {
     try {
-        const result = await client.query('SELECT * FROM public."donantes"');
+        const result = await pool.query('SELECT * FROM donantes');
         res.json(result.rows); // Envía los resultados como respuesta
     } catch (err) {
         console.error('Error ejecutando la consulta', err.stack);
         res.status(500).json({ message: 'Error al obtener donantes', error: err.message });
     }
-}
+};
 
 // Crear donante
 const createDonante = async (req, res) => {
@@ -21,13 +27,13 @@ const createDonante = async (req, res) => {
     `;
 
     try {
-        const result = await client.query(query, [nombreUsuario, contraseña, gmail, numeroWhatsapp, nombre, apellido, fechaNacimiento, direccion, codigoPostal]);
+        const result = await pool.query(query, [nombreUsuario, contraseña, gmail, numeroWhatsapp, nombre, apellido, fechaNacimiento, direccion, codigoPostal]);
         res.json({ message: "Donante registrado correctamente", idDonante: result.rows[0].id });
     } catch (error) {
         console.error('Error al registrar Donante:', error);
         res.status(500).json({ message: "Error al registrar Donante", error: error.message });
     }
-}
+};
 
 // Actualizar donante
 const updateDonante = async (req, res) => {
@@ -49,7 +55,7 @@ const updateDonante = async (req, res) => {
     `;
 
     try {
-        const result = await client.query(query, [contraseña, gmail, numeroWhatsapp, nombre, apellido, fechaNacimiento, direccion, codigoPostal, nombreUsuario]);
+        const result = await pool.query(query, [contraseña, gmail, numeroWhatsapp, nombre, apellido, fechaNacimiento, direccion, codigoPostal, nombreUsuario]);
 
         if (result.rowCount > 0) {
             res.json({ message: "Donante actualizado correctamente" });
@@ -60,7 +66,7 @@ const updateDonante = async (req, res) => {
         console.error('Error al actualizar Donante:', error);
         res.status(500).json({ message: "Error al actualizar Donante", error: error.message });
     }
-}
+};
 
 // Eliminar donante
 const deleteDonante = async (req, res) => {
@@ -68,9 +74,9 @@ const deleteDonante = async (req, res) => {
     const query = 'DELETE FROM donantes WHERE id = $1';
 
     try {
-        const result = await client.query(query, [id]);
+        const result = await pool.query(query, [id]);
         if (result.rowCount > 0) {
-            res.send("Donante Eliminado Correctamente");
+            res.json({ message: "Donante eliminado correctamente" });
         } else {
             res.status(404).json({ message: "Donante no encontrado" });
         }
@@ -78,15 +84,15 @@ const deleteDonante = async (req, res) => {
         console.error('Error al eliminar Donante:', err);
         res.status(500).json({ message: "Error al eliminar Donante", error: err.message });
     }
-}
+};
 
-// Obtener donantes por id de usuario
+// Obtener donante por ID
 const donantesById = async (req, res) => {
     const id = req.params.id;
-    const query = 'SELECT * FROM donantes WHERE id_user = $1';
+    const query = 'SELECT * FROM donantes WHERE id = $1';
 
     try {
-        const result = await client.query(query, [id]);
+        const result = await pool.query(query, [id]);
         if (result.rows.length > 0) {
             res.json(result.rows);
         } else {
@@ -96,7 +102,7 @@ const donantesById = async (req, res) => {
         console.error('Error al requerir donante:', err);
         res.status(500).json({ message: "Error al requerir donante", error: err.message });
     }
-}
+};
 
 const donantes = {
     getDonantes,
@@ -104,6 +110,6 @@ const donantes = {
     updateDonante,
     deleteDonante,
     donantesById,
-}
+};
 
 export default donantes;
