@@ -1,6 +1,4 @@
 GET http://localhost:3000/getDonantes HTTP/1.1
-###
-GET http://localhost:3000/Donantes HTTP/1.1
 
 
 
