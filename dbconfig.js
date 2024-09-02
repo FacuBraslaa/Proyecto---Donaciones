@@ -12,5 +12,3 @@ export const client = new Client({
     port: 5432,
     ssl: true
 });
-
-client.connect(); 
