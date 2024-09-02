@@ -1,4 +1,18 @@
-GET http://localhost:3000/getDonantes HTTP/1.1
+POST http://localhost:3000/getDonantes HTTP/1.1
+Content-Type: application/json
+
+{
+    "nombre_usuario": "FacuBrasla",
+    "contraseña": "facu123",
+    "gmail": "facubrasla@gmail.com",
+    "numero_whatsapp": "9 11 4047-8090",
+    "nombre": "Facundo",
+    "apellido": "Braslavsky",
+    "fecha_nacimiento": "2007-12-05",
+    "direccion": "Cabildo",
+    "codigo_postal": "1427"
+}
+
 ###
 GET http://localhost:3000/Donantes HTTP/1.1
 
