@@ -21,9 +21,9 @@ app.use("/Donantes", DonantesRouter);
 // app.use("/Opciones", OpcionesRouter);
 
 // Configurar ERR 404
-/*app.use((req, res, next) => {
+app.use((req, res, next) => {
     res.status(404).send('Lo siento, no se ha encontrado la página solicitada. ERROR 404');
-}); */
+}); 
 
 // Iniciar el servidor
 app.listen(port, () => {

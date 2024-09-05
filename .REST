@@ -2,7 +2,7 @@ POST http://localhost:3000/Donantes/registerDonante HTTP/1.1
 Content-Type: application/json
 
 {
-    "ID": 1,
+    "ID": 5,
     "Codigo_postal": 1427,
     "Numero_de_watshapp": 91140478090,
     "Like": true,
@@ -15,7 +15,9 @@ Content-Type: application/json
     "Fecha_de_nacimiento": "2007-12-05",
     "Direccion": "Cabildo"
 }
-
+###
+DELETE http://localhost:3000/Donantes/deleteDonante/1 HTTP/1.1
+Content-Type: application/json
 
 ###
 GET http://localhost:3000/Donantes HTTP/1.1
