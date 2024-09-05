@@ -24,6 +24,13 @@ Content-Type: application/json
 GET http://localhost:3000/Donantes/getDonantes HTTP/1.1
 Content-Type: application/json
 
+###
+### GET http://localhost:3000/Donantes/donantesById/6 HTTP/1.1
+
+###
+ ### PUT http://localhost:3000/Donantes/updateDonante HTTP/1.1
+ 
+
 
 curl http://localhost:3000/chau
 
