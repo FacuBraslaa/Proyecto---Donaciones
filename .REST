@@ -1,10 +1,45 @@
-POST http://localhost:3000/Donantes/registerDonante HTTP/1.1
+###
+POST http://localhost:3000/donantes HTTP/1.1
 Content-Type: application/json
 
 {
-    "ID": 6,
+    "ID": 1,
     "Codigo_postal": 1427,
-    "Numero_de_watshapp": 91140478090,
+    "Numero_de_watshapp": 91140478098,
+    "Like": true,//[1,2,3,4,5]
+    "Foto_de_perfil": "Fotodeperfil",
+    "Done": true, 
+    "Username": "FacuBrasla1",
+    "Password": "facu123",
+    "Name_and_Lastname": "Facundo Braslavsky",
+    "Email": "facubrasla1@gmail.com",
+    "Fecha_de_nacimiento": "2007-12-05",
+    "Direccion": "Cabildo"
+}
+
+# SELECT * FROM "Donantes" WHERE Numero_de_watshapp=$1 or Username=$2 or Email=$3 
+
+###
+DELETE http://localhost:3000/donantes/6 HTTP/1.1
+Content-Type: application/json
+
+
+###
+GET http://localhost:3000/donantes HTTP/1.1
+Content-Type: application/json
+
+###
+GET http://localhost:3000/donantes/6 HTTP/1.1
+Content-Type: application/json
+
+###
+ ### 
+PUT http://localhost:3000/donantes/1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "Codigo_postal": 1421,
+    "Numero_de_watshapp": 91140478091,
     "Like": true,
     "Foto_de_perfil": "Fotodeperfil",
     "Done": true, 
@@ -15,22 +50,15 @@ Content-Type: application/json
     "Fecha_de_nacimiento": "2007-12-05",
     "Direccion": "Cabildo"
 }
-###
-DELETE http://localhost:3000/Donantes/deleteDonante/5 HTTP/1.1
-Content-Type: application/json
 
 
-###
-GET http://localhost:3000/Donantes/getDonantes HTTP/1.1
-Content-Type: application/json
+# curl http://localhost:3000/chau
 
-###
-### GET http://localhost:3000/Donantes/donantesById/6 HTTP/1.1
-
-###
- ### PUT http://localhost:3000/Donantes/updateDonante HTTP/1.1
- 
-
-
-curl http://localhost:3000/chau
-
+# TO DO
+# - autogenerar ID desde pgadmin
+# - Cambiar columna idcategoria en tabla Likes
+# - Crear tabla donaciones
+# - seguridad password
+# - Cambiar Like de booleano a array (se saca de la tabla de likes select * from Likes where iddonante = $1 y lo miso con Done y donantes
+# - Cambiar foto de perfil a url 
+# - Validar que cuando se crea un usuario o se actualiza no se repitan los camos username, email y whatsapp

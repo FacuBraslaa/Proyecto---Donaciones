@@ -15,7 +15,7 @@ import DonantesRouter from './Routes/DonantesRouter.js';
 // import LikeRouter from "./Controllers/Like"
 // import OpcionesRouter from "./Controllers/Opciones"
 
-app.use("/Donantes", DonantesRouter);
+app.use("/donantes", DonantesRouter);
 // app.use("/ongosc", ongoscRouter);
 // app.use("/Like", LikeRouter);
 // app.use("/Opciones", OpcionesRouter);

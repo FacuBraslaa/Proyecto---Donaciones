@@ -4,18 +4,18 @@ import Donantes from '../Controllers/Donantes.js';
 const router = express.Router();
 
 // Crear donante
-router.post("/registerDonante", Donantes.createDonante);
+router.post("", Donantes.createDonante);
 
 // Devolver donante específico
-router.get("/Donante/:id", Donantes.donantesById);
+router.get("/:id", Donantes.getDonanteById);
 
 // Editar donante existente
-router.put("/updateDonante/:id", Donantes.updateDonante);
+router.put("/:id", Donantes.updateDonante);
 
 // Eliminar donante existente
-router.delete("/deleteDonante/:id", Donantes.deleteDonante);
+router.delete("/:id", Donantes.deleteDonante);
 
 // Obtener todos los donantes (función adicional)
-router.get("/getDonantes", Donantes.getDonantes);
+router.get("", Donantes.getDonantes);
 
 export default router;

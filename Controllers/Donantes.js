@@ -15,17 +15,17 @@ const getDonantes = async (req, res) => {
 
 // Crear donante
 const createDonante = async (req, res) => {
-    const { ID, Codigo_postal, Numero_de_whatsapp, Like, Foto_de_perfil, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion } = req.body;
+    const { ID, Codigo_postal, Numero_de_watshapp, Like, Foto_de_perfil, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion } = req.body;
 
     const query = `
         INSERT INTO "Donantes" 
-        ("ID", "Codigo_postal", "Numero_de_whatsapp", "Like", "Foto_de_perfil", "Done", "Username", "Password", "Name_and_Lastname", "Email", "Fecha_de_nacimiento", "Direccion") 
+        ("ID", "Codigo_postal", "Numero_de_watshapp", "Like", "Foto_de_perfil", "Done", "Username", "Password", "Name_and_Lastname", "Email", "Fecha_de_nacimiento", "Direccion") 
         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
         RETURNING "ID"
     `;
 
     try {
-        const result = await client.query(query, [ID, Codigo_postal, Numero_de_whatsapp, Like, Foto_de_perfil, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion]);
+        const result = await client.query(query, [ID, Codigo_postal, Numero_de_watshapp, Like, Foto_de_perfil, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion]);
         res.json({ message: "Donante registrado correctamente", idDonante: result.rows[0].ID });
     } catch (error) {
         console.error('Error al registrar Donante:', error);
@@ -35,27 +35,27 @@ const createDonante = async (req, res) => {
 
 // Actualizar donante
 const updateDonante = async (req, res) => {
-    const { Codigo_postal, Numero_de_whatsapp, Like, Foto_de_perfil, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion } = req.body;
-
+    const id = parseInt(req.params.id);
+    const { Codigo_postal, Numero_de_watshapp, Like, Foto_de_perfil, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion } = req.body;
     const query = `
         UPDATE "Donantes"
         SET 
         "Password" = $1, 
         "Email" = $2, 
-        "Numero_de_whatsapp" = $3, 
+        "Numero_de_watshapp" = $3, 
         "Name_and_Lastname" = $4, 
         "Fecha_de_nacimiento" = $5, 
         "Direccion" = $6, 
         "Codigo_postal" = $7,
         "Like" = $8,
         "Foto_de_perfil" = $9,
-        "Done" = $10
-        WHERE "Username" = $11
+        "Done" = $10,
+        "Username" = $11
+        WHERE "ID" = $12
     `;
 
     try {
-        const result = await client.query(query, [Password, Email, Numero_de_whatsapp, Name_and_Lastname, Fecha_de_nacimiento, Direccion, Codigo_postal, Like, Foto_de_perfil, Done, Username]);
-
+        const result = await client.query(query, [Password, Email, Numero_de_watshapp, Name_and_Lastname, Fecha_de_nacimiento, Direccion, Codigo_postal, Like, Foto_de_perfil, Done, Username, id]);
         if (result.rowCount > 0) {
             res.json({ message: "Donante actualizado correctamente" });
         } else {
@@ -91,7 +91,7 @@ const deleteDonante = async (req, res) => {
 };
 
 // Obtener donante por ID
-const donantesById = async (req, res) => {
+const getDonanteById = async (req, res) => {
     const id = req.params.id;
     const query = 'SELECT * FROM "Donantes" WHERE "ID" = $1';
 
@@ -113,7 +113,7 @@ const donantes = {
     createDonante,
     updateDonante,
     deleteDonante,
-    donantesById,
+    getDonanteById
 };
 
 export default donantes;
