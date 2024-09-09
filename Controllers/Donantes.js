@@ -3,7 +3,7 @@ import { client } from '../dbconfig.js';
 await client.connect();
 
 // Validar campos únicos (username, email, whatsapp)
-const checkUniqueFields = async (Username, Email, Numero_de_watshapp, id = null) => {
+const checkDuplicateFields = async (Username, Email, Numero_de_watshapp, id = null) => {
     let query = `
         SELECT * FROM "Donantes"
         WHERE ("Username" = $1 OR "Email" = $2 OR "Numero_de_watshapp" = $3)
@@ -54,7 +54,7 @@ const createDonante = async (req, res) => {
 
     // Verificar si el username, email o whatsapp ya existen
     try {
-        const duplicate = await checkUniqueFields(Username, Email, Numero_de_watshapp);
+        const duplicate = await checkDuplicateFields(Username, Email, Numero_de_watshapp);
         if (duplicate) {
             return res.status(400).json({ message: `${duplicate.field} ya está en uso: ${duplicate.value}` });
         }
@@ -90,7 +90,7 @@ const updateDonante = async (req, res) => {
 
     // Verificar si el username, email o whatsapp ya existen (excluyendo al donante actual)
     try {
-        const duplicate = await checkUniqueFields(Username, Email, Numero_de_watshapp, id);
+        const duplicate = await checkDuplicateFields(Username, Email, Numero_de_watshapp, id);
         if (duplicate) {
             return res.status(400).json({ message: `${duplicate.field} ya está en uso: ${duplicate.value}` });
         }
