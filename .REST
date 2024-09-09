@@ -62,3 +62,4 @@ Content-Type: application/json
 # - Cambiar Like de booleano a array (se saca de la tabla de likes select * from Likes where iddonante = $1 y lo miso con Done y donantes
 # - Cambiar foto de perfil a url 
 # - Validar que cuando se crea un usuario o se actualiza no se repitan los camos username, email y whatsapp
+# - Agregar en Donantes.js pedir todos los usuarios que quieran donar por ej: ropa.
