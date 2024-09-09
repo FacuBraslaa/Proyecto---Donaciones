@@ -1,6 +1,6 @@
-import { client } from '../dbconfig.js'; // No es necesario volver a importar pg
+import { client } from '../dbconfig.js'; 
 
-await client.connect(); 
+await client.connect();
 
 // Obtener todos los donantes
 const getDonantes = async (req, res) => {
@@ -15,17 +15,17 @@ const getDonantes = async (req, res) => {
 
 // Crear donante
 const createDonante = async (req, res) => {
-    const { ID, Codigo_postal, Numero_de_watshapp, Like, Foto_de_perfil, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion } = req.body;
+    const { Codigo_postal, Numero_de_watshapp, Like, Foto_de_perfil, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion } = req.body;
 
     const query = `
         INSERT INTO "Donantes" 
-        ("ID", "Codigo_postal", "Numero_de_watshapp", "Like", "Foto_de_perfil", "Done", "Username", "Password", "Name_and_Lastname", "Email", "Fecha_de_nacimiento", "Direccion") 
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+        ("Codigo_postal", "Numero_de_watshapp", "Like", "Foto_de_perfil", "Done", "Username", "Password", "Name_and_Lastname", "Email", "Fecha_de_nacimiento", "Direccion") 
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
         RETURNING "ID"
     `;
 
     try {
-        const result = await client.query(query, [ID, Codigo_postal, Numero_de_watshapp, Like, Foto_de_perfil, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion]);
+        const result = await client.query(query, [Codigo_postal, Numero_de_watshapp, Like, Foto_de_perfil, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion]);
         res.json({ message: "Donante registrado correctamente", idDonante: result.rows[0].ID });
     } catch (error) {
         console.error('Error al registrar Donante:', error);

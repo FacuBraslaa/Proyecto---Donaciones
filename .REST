@@ -3,11 +3,11 @@ POST http://localhost:3000/donantes HTTP/1.1
 Content-Type: application/json
 
 {
-    "ID": 1,
+    
     "Codigo_postal": 1427,
     "Numero_de_watshapp": 91140478098,
-    "Like": true,//[1,2,3,4,5]
-    "Foto_de_perfil": "Fotodeperfil",
+    "Like": true,
+    "Foto_de_perfil": "URL",
     "Done": true, 
     "Username": "FacuBrasla1",
     "Password": "facu123",
@@ -20,7 +20,7 @@ Content-Type: application/json
 # SELECT * FROM "Donantes" WHERE Numero_de_watshapp=$1 or Username=$2 or Email=$3 
 
 ###
-DELETE http://localhost:3000/donantes/6 HTTP/1.1
+DELETE http://localhost:3000/donantes/2 HTTP/1.1
 Content-Type: application/json
 
 
