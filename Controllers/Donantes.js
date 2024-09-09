@@ -2,6 +2,36 @@ import { client } from '../dbconfig.js';
 
 await client.connect();
 
+// Validar campos únicos (username, email, whatsapp)
+const checkUniqueFields = async (Username, Email, Numero_de_watshapp, id = null) => {
+    let query = `
+        SELECT * FROM "Donantes"
+        WHERE ("Username" = $1 OR "Email" = $2 OR "Numero_de_watshapp" = $3)
+    `;
+    
+    const values = [Username, Email, Numero_de_watshapp];
+    
+    // Excluir el donante actual en caso de actualización
+    if (id) {
+        query += ` AND "ID" != $4`;
+        values.push(id);
+    }
+
+    try {
+        const result = await client.query(query, values);
+        if (result.rows.length > 0) {
+            const existingUser = result.rows[0];
+            if (existingUser.Username === Username) return { field: 'Username', value: Username };
+            if (existingUser.Email === Email) return { field: 'Email', value: Email };
+            if (existingUser.Numero_de_watshapp === Numero_de_watshapp) return { field: 'Numero_de_watshapp', value: Numero_de_watshapp };
+        }
+        return null; // No hay duplicados
+    } catch (error) {
+        console.error('Error al verificar campos únicos:', error);
+        throw new Error('Error al verificar campos únicos');
+    }
+};
+
 // Obtener todos los donantes
 const getDonantes = async (req, res) => {
     try {
@@ -16,6 +46,21 @@ const getDonantes = async (req, res) => {
 // Crear donante
 const createDonante = async (req, res) => {
     const { Codigo_postal, Numero_de_watshapp, Like, Foto_de_perfil, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion } = req.body;
+
+    // Verificar si se proporcionaron los datos obligatorios
+    if (!Username || !Email || !Numero_de_watshapp) {
+        return res.status(400).json({ message: "Se requiere Username, Email y Número de WhatsApp" });
+    }
+
+    // Verificar si el username, email o whatsapp ya existen
+    try {
+        const duplicate = await checkUniqueFields(Username, Email, Numero_de_watshapp);
+        if (duplicate) {
+            return res.status(400).json({ message: `${duplicate.field} ya está en uso: ${duplicate.value}` });
+        }
+    } catch (error) {
+        return res.status(500).json({ message: "Error al verificar campos únicos", error: error.message });
+    }
 
     const query = `
         INSERT INTO "Donantes" 
@@ -37,6 +82,22 @@ const createDonante = async (req, res) => {
 const updateDonante = async (req, res) => {
     const id = parseInt(req.params.id);
     const { Codigo_postal, Numero_de_watshapp, Like, Foto_de_perfil, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion } = req.body;
+
+    // Verificar si se proporcionaron los datos obligatorios
+    if (!Username || !Email || !Numero_de_watshapp) {
+        return res.status(400).json({ message: "Se requiere Username, Email y Número de WhatsApp" });
+    }
+
+    // Verificar si el username, email o whatsapp ya existen (excluyendo al donante actual)
+    try {
+        const duplicate = await checkUniqueFields(Username, Email, Numero_de_watshapp, id);
+        if (duplicate) {
+            return res.status(400).json({ message: `${duplicate.field} ya está en uso: ${duplicate.value}` });
+        }
+    } catch (error) {
+        return res.status(500).json({ message: "Error al verificar campos únicos", error: error.message });
+    }
+
     const query = `
         UPDATE "Donantes"
         SET 

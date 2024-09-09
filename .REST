@@ -5,14 +5,14 @@ Content-Type: application/json
 {
     
     "Codigo_postal": 1427,
-    "Numero_de_watshapp": 91140478098,
+    "Numero_de_watshapp": 91140478093,
     "Like": true,
     "Foto_de_perfil": "URL",
     "Done": true, 
-    "Username": "FacuBrasla1",
+    "Username": "FacuBrasla5",
     "Password": "facu123",
     "Name_and_Lastname": "Facundo Braslavsky",
-    "Email": "facubrasla1@gmail.com",
+    "Email": "facubrasla5@gmail.com",
     "Fecha_de_nacimiento": "2007-12-05",
     "Direccion": "Cabildo"
 }
@@ -55,9 +55,6 @@ Content-Type: application/json
 # curl http://localhost:3000/chau
 
 # TO DO
-# - autogenerar ID desde pgadmin
-# - Cambiar columna idcategoria en tabla Likes
-# - Crear tabla donaciones
 # - seguridad password
 # - Cambiar Like de booleano a array (se saca de la tabla de likes select * from Likes where iddonante = $1 y lo miso con Done y donantes
 # - Cambiar foto de perfil a url 
