@@ -68,10 +68,17 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/Categoria HTTP/1.1
+GET http://localhost:3000/Categoria/Muebles HTTP/1.1
 Content-Type: application/json
 
+// Postear las opciones y las subopciones
+###
+POST http://localhost:3000/Opciones HTTP/1.1
+Content-Type: application/json
 
+{
+    "Nombres": "Ropa" 
+}
 
 # TO DO
 # - seguridad password
