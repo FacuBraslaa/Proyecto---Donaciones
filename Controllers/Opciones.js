@@ -1,9 +1,4 @@
-import { conn } from "../db.js"; 
-import pg from "pg"; // Importamos el cliente de pg
-
-// Instanciamos el cliente de PostgreSQL
-const client = new pg.Client(conn);
-client.connect();
+import { client } from '../dbconfig.js'; // Asegúrate de que 'client' se exporte correctamente desde dbconfig.js
 
 // Crear Opciones
 const crearOpciones = async (req, res) => {
@@ -13,17 +8,17 @@ const crearOpciones = async (req, res) => {
         INSERT INTO "Opciones" 
             ("Nombres")
             VALUES ($1)
-            RETURNING "ID"
     `;
 
     try {
-        const result = await client.query(query, [Nombres]);
-        res.json({ message: "Opción registrada correctamente", idOpcion: result.rows[0].ID });
+        await client.query(query, [Nombres]);
+        res.json({ message: "Opción registrada correctamente" });
     } catch (error) {
         console.error('Error al registrar Opción:', error);
         res.status(500).json({ message: "Error al registrar Opción", error: error.message });
     }
 };
+
 
 // Exportamos las funciones que manejan las Opciones
 const OpcionesController = {
