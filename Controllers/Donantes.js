@@ -3,7 +3,7 @@ import { client } from '../dbconfig.js';
 await client.connect();
 
 // Validar campos únicos (username, email, whatsapp)
-const checkDuplicateFields = async (Username, Email, Numero_de_watshapp, id = null) => {
+const Chekdoble = async (Username, Email, Numero_de_watshapp, id = null) => {
     let query = `
         SELECT * FROM "Donantes"
         WHERE ("Username" = $1 OR "Email" = $2 OR "Numero_de_watshapp" = $3)
@@ -54,7 +54,7 @@ const createDonante = async (req, res) => {
 
     // Verificar si el username, email o whatsapp ya existen
     try {
-        const duplicate = await checkDuplicateFields(Username, Email, Numero_de_watshapp);
+        const duplicate = await Chekdoble(Username, Email, Numero_de_watshapp);
         if (duplicate) {
             return res.status(400).json({ message: `${duplicate.field} ya está en uso: ${duplicate.value}` });
         }
@@ -169,13 +169,96 @@ const getDonanteById = async (req, res) => {
     }
 };
 
+// Crear categoría
+const createCategoria = async (req, res) => {
+    const { Nombre_categoria, Descripcion } = req.body;
+
+    // Verificar si se proporcionaron los datos obligatorios
+    if (!Nombre_categoria) {
+        return res.status(400).json({ message: "Se requiere el nombre de la categoría" });
+    }
+
+    // Consulta para insertar una nueva categoría en la base de datos
+    const query = `
+        INSERT INTO "Categorias" 
+        ("Nombre_categoria", "Descripcion") 
+        VALUES ($1, $2)
+        RETURNING "ID"
+    `;
+
+    try {
+        const result = await client.query(query, [Nombre_categoria, Descripcion]);
+        res.json({ message: "Categoría registrada correctamente", idCategoria: result.rows[0].ID });
+    } catch (error) {
+        console.error('Error al registrar categoría:', error);
+        res.status(500).json({ message: "Error al registrar categoría", error: error.message });
+    }
+};
+
+
+// Actualizar categoría
+const updateCategoria = async (req, res) => {
+    const id = parseInt(req.params.id); // Obtener el ID de la categoría desde los parámetros de la solicitud
+    const { Nombre_categoria, Descripcion } = req.body; // Extraer los nuevos datos de la categoría
+
+    // Verificar si se proporcionaron los datos obligatorios
+    if (!Nombre_categoria) {
+        return res.status(400).json({ message: "Se requiere el nombre de la categoría" });
+    }
+
+    // Consulta para actualizar la categoría en la base de datos
+    const query = `
+        UPDATE "Categorias"
+        SET 
+        "Nombre_categoria" = $1,
+        "Descripcion" = $2
+        WHERE "ID" = $3
+    `;
+
+    try {
+        const result = await client.query(query, [Nombre_categoria, Descripcion, id]);
+        if (result.rowCount > 0) {
+            res.json({ message: "Categoría actualizada correctamente" });
+        } else {
+            res.status(404).json({ message: "Categoría no encontrada" });
+        }
+    } catch (error) {
+        console.error('Error al actualizar categoría:', error);
+        res.status(500).json({ message: "Error al actualizar categoría", error: error.message });
+    }
+};
+
+
+// Obtener donante por categoría
+const getDonanteByCategoria = async (req, res) => {
+    const categoria = req.params.categoria; // Obtener la categoría desde los parámetros de la solicitud
+    const query = 'SELECT * FROM "Donantes" WHERE "Categoria" = $1'; // Cambiar "Categoria" por la columna real de la tabla
+
+    try {
+        const result = await client.query(query, [categoria]);
+        if (result.rows.length > 0) {
+            res.json(result.rows); // Devolver todos los resultados que coincidan con la categoría
+        } else {
+            res.status(404).json({ message: "No se encontraron donantes en la categoría proporcionada" });
+        }
+    } catch (err) {
+        console.error('Error al requerir donantes por categoría:', err);
+        res.status(500).json({ message: "Error al requerir donantes por categoría", error: err.message });
+    }
+};
+
+
 
 const donantes = {
     getDonantes,
     createDonante,
     updateDonante,
     deleteDonante,
-    getDonanteById
+    getDonanteById,
+    createCategoria,
+    updateCategoria, 
+    getDonanteByCategoria
+
 };
 
 export default donantes;

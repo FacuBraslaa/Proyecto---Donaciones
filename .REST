@@ -51,8 +51,27 @@ Content-Type: application/json
     "Direccion": "Cabildo"
 }
 
+// Categorias de los donantes
+###
+POST http://localhost:3000/Categoria HTTP/1.1
+Content-Type: application/json
 
-# curl http://localhost:3000/chau
+{
+    "Categoria": "Ropa"
+}
+
+### 
+PUT http://localhost:3000/Categoria/1 HTTP/1.1
+Content-Type: application/json
+{
+    "Categoria": "Muebles"
+}
+
+###
+GET http://localhost:3000/Categoria HTTP/1.1
+Content-Type: application/json
+
+
 
 # TO DO
 # - seguridad password

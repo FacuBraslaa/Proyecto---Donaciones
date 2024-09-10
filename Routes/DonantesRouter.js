@@ -4,7 +4,7 @@ import Donantes from '../Controllers/Donantes.js';
 const router = express.Router();
 
 // Crear donante
-router.post("", Donantes.createDonante);
+router.post("/", Donantes.createDonante);
 
 // Devolver donante específico
 router.get("/:id", Donantes.getDonanteById);
@@ -16,6 +16,6 @@ router.put("/:id", Donantes.updateDonante);
 router.delete("/:id", Donantes.deleteDonante);
 
 // Obtener todos los donantes (función adicional)
-router.get("", Donantes.getDonantes);
+router.get("/", Donantes.getDonantes);
 
 export default router;
