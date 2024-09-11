@@ -53,7 +53,7 @@ Content-Type: application/json
 
 // Categorias de los donantes
 ###
-POST http://localhost:3000/Categoria HTTP/1.1
+POST http://localhost:3000/Categorias HTTP/1.1
 Content-Type: application/json
 
 {
@@ -61,14 +61,14 @@ Content-Type: application/json
 }
 
 ### 
-PUT http://localhost:3000/Categoria/1 HTTP/1.1
+PUT http://localhost:3000/Categorias/1 HTTP/1.1
 Content-Type: application/json
 {
     "Categoria": "Muebles"
 }
 
 ###
-GET http://localhost:3000/Categoria/Muebles HTTP/1.1
+GET http://localhost:3000/Categorias/Muebles HTTP/1.1
 Content-Type: application/json
 
 // Postear las opciones y las subopciones
@@ -80,7 +80,15 @@ Content-Type: application/json
     "Nombres": "Ropa" 
 }
 
+###
+GET http://localhost:3000/Opciones HTTP/1.1
+Content-Type: application/json
+
+
 # TO DO
 # - seguridad password
 # - Cambiar Like de booleano a array (se saca de la tabla de likes select * from Likes where iddonante = $1 y lo miso con Done y donantes
 # - Cambiar foto de perfil a url 
+# - Validar que exista el idDonantes y el IDongosc, y cuando se valida eso se puede hacer el insert en la tabla de likes, lo mismo con donaciones.
+# - Validar la direccion mandarla a google maps, y que te la devuelva en el mapa.
+# - se puede utilizar con el codigo postal 

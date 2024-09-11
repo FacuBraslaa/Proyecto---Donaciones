@@ -11,13 +11,13 @@ app.get("/chau", (_, res) => {
 
 // Importación de rutas
 import DonantesRouter from './Routes/DonantesRouter.js';
-// import DonacionesRouter from './Routes/DonacionesRouter.js';
+import CategoriasRouter from './Routes/CategoriasRouter.js';
 // import OngoscRouter from "./Controllers/Ongosc.js"; // Asegúrate de la ruta correcta
 // import LikeRouter from "./Controllers/Like.js"; // Asegúrate de la ruta correcta
 import OpcionesRouter from './Routes/OpcionesRouter.js';
 
 app.use("/donantes", DonantesRouter);
-// app.use("/donaciones", DonacionesRouter);
+app.use("/Categorias", CategoriasRouter);
 // app.use("/ongosc", OngoscRouter);
 // app.use("/like", LikeRouter); 
 app.use("/opciones", OpcionesRouter); 

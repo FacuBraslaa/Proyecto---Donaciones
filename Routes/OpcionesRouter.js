@@ -5,4 +5,7 @@ const router = express.Router();
 // Crear opción
 router.post("/", Opciones.crearOpciones);
 
+// Obtener todos las Opciones 
+router.get("/", Opciones.getOpciones);
+
 export default router;

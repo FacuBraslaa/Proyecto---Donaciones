@@ -22,12 +22,24 @@ const crearOpciones = async (req, res) => {
     }
 };
 
+// Obtener todos las opciones
+const getOpciones = async (req, res) => {
+    try {
+        const result = await client.query('SELECT * FROM "Opciones"');
+        res.json(result.rows); // Envía los resultados como respuesta
+    } catch (err) {
+        console.error('Error ejecutando la consulta', err.stack);
+        res.status(500).json({ message: 'Error al obtener Opciones', error: err.message });
+    }
+};
+
 
 
 
 // Exportamos las funciones que manejan las Opciones
 const OpcionesController = {
     crearOpciones,
+    getOpciones
 };
 
 export default OpcionesController;
