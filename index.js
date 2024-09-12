@@ -1,4 +1,4 @@
-import express from "express";
+import express from 'express';
 const app = express();
 const port = 3000;
 
@@ -11,17 +11,21 @@ app.get("/chau", (_, res) => {
 
 // Importación de rutas
 import DonantesRouter from './Routes/DonantesRouter.js';
-// import OngoscRouter from "./Controllers/Ongosc.js"; // Asegúrate de la ruta correcta
-// import LikeRouter from "./Controllers/Like.js"; // Asegúrate de la ruta correcta
+import CategoriaRouter from './Routes/CategoriaRouter.js';
+// Asegúrate de que estas rutas sean correctas y descoméntalas cuando estén listas
+// import OngoscRouter from './Controllers/Ongosc.js'; 
+// import LikeRouter from './Controllers/Like.js'; 
 import OpcionesRouter from './Routes/OpcionesRouter.js';
 
+// Usar las rutas importadas
 app.use("/donantes", DonantesRouter);
-// app.use("/ongosc", OngoscRouter);
+app.use("/categoria", CategoriaRouter); // Cambié "Categoria" a "categoria" para consistencia
+// app.use("/ongosc", OngoscRouter); 
 // app.use("/like", LikeRouter); 
 app.use("/opciones", OpcionesRouter); 
 
 // Manejo de error 404
-app.use((req, res, next) => {
+app.use((req, res) => {
     res.status(404).send('Lo siento, no se ha encontrado la página solicitada. ERROR 404');
 });
 
