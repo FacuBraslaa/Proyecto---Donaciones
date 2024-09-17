@@ -9,4 +9,7 @@ router.get("/donantes/:id", Categoria.getIDDonantes);
 // Devolver opción específica
 router.get("/opciones/:id", Categoria.getIDOpciones);
 
+//Mostrar los Nombres a los donantes
+router.get("/Nombres/:", Categoria.getNombresparaDonantesyong);
+
 export default router;

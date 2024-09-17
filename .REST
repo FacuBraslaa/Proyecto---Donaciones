@@ -74,6 +74,20 @@ Content-Type: application/json
 GET http://localhost:3000/opciones/4 HTTP/1.1
 Content-Type: application/json
 
+###
+GET http://localhost:3000/opciones/ HTTP/1.1
+Content-Type: application/json
+
+// Obtener los donantes que le dio like a una ong-osc
+
+###
+GET http://localhost:3000/donantes/5 HTTP/1.1
+Content-Type: application/json
+
+###
+GET http://localhost:3000/Like/4 HTTP/1.1
+Content-Type: application/json
+
 
 # TO DO
 # - seguridad password

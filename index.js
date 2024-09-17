@@ -12,16 +12,15 @@ app.get("/chau", (_, res) => {
 // Importación de rutas
 import DonantesRouter from './Routes/DonantesRouter.js';
 import CategoriaRouter from './Routes/CategoriaRouter.js';
-// Asegúrate de que estas rutas sean correctas y descoméntalas cuando estén listas
 // import OngoscRouter from './Controllers/Ongosc.js'; 
-// import LikeRouter from './Controllers/Like.js'; 
+import LikeRouter from './Routes/LikeRouter.js'; 
 import OpcionesRouter from './Routes/OpcionesRouter.js';
 
 // Usar las rutas importadas
 app.use("/donantes", DonantesRouter);
-app.use("/categoria", CategoriaRouter); // Cambié "Categoria" a "categoria" para consistencia
+app.use("/categoria", CategoriaRouter); 
 // app.use("/ongosc", OngoscRouter); 
-// app.use("/like", LikeRouter); 
+app.use("/Like", LikeRouter); 
 app.use("/opciones", OpcionesRouter); 
 
 // Manejo de error 404
