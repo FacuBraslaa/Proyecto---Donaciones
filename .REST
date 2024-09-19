@@ -64,13 +64,17 @@ Content-Type: application/json
 GET http://localhost:3000/Opciones HTTP/1.1
 Content-Type: application/json
 
+### no funciona
+DELETE http://localhost:3000/Opciones/6 HTTP/1.1
+Content-Type: application/json
+
 // Categorias e ID de donante
 
 ###
 GET http://localhost:3000/donantes/5 HTTP/1.1
 Content-Type: application/json
 
-###
+### no funciona
 GET http://localhost:3000/opciones/4 HTTP/1.1
 Content-Type: application/json
 
@@ -84,7 +88,7 @@ Content-Type: application/json
 GET http://localhost:3000/donantes/5 HTTP/1.1
 Content-Type: application/json
 
-###
+### no funciona
 GET http://localhost:3000/Like/4 HTTP/1.1
 Content-Type: application/json
 

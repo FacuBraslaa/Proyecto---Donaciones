@@ -8,4 +8,7 @@ router.post("/", Opciones.crearOpciones);
 // Obtener todos las Opciones 
 router.get("/", Opciones.getOpciones);
 
+// Eliminar Opcion por ID 
+router.delete("/", Opciones.deleteOpcion);
+
 export default router;
