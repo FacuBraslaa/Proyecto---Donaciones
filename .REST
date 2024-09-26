@@ -92,6 +92,30 @@ Content-Type: application/json
 GET http://localhost:3000/Like/4 HTTP/1.1
 Content-Type: application/json
 
+// Todo lo que tenga que ver con ongosc
+
+### no funciona, no encuentra ek id qu tienen que ser autogenerado.
+POST http://localhost:3000/Ongosc HTTP/1.1
+Content-Type: application/json
+
+{
+    
+    "Username": "Tomas Grinstein",
+    "Codigo_postal": 1456,
+    "Email": "Tomasgrinstein@gmail.com",
+    "Numero_de_watshapp": 91180378710,
+    "UsernameOrganizacion": "Mano en Mano", 
+    "Password": "Totito123",
+    "Direccion": "Libertador",
+    "Cuit": "12345678911",
+    "Foto_de_perfil": "URL"
+    
+}
+
+### Busca a todas las ongosc, no esta probado
+GET http://localhost:3000/Ongosc HTTP/1.1
+Content-Type: application/json
+
 
 # TO DO
 # - seguridad password

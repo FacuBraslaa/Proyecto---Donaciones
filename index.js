@@ -12,14 +12,14 @@ app.get("/chau", (_, res) => {
 // Importación de rutas
 import DonantesRouter from './Routes/DonantesRouter.js';
 import CategoriaRouter from './Routes/CategoriaRouter.js';
-// import OngoscRouter from './Controllers/Ongosc.js'; 
+import OngoscRouter from './Routes/OngoscRouter.js'; 
 import LikeRouter from './Routes/LikeRouter.js'; 
 import OpcionesRouter from './Routes/OpcionesRouter.js';
 
 // Usar las rutas importadas
 app.use("/donantes", DonantesRouter);
 app.use("/categoria", CategoriaRouter); 
-// app.use("/ongosc", OngoscRouter); 
+app.use("/ongosc", OngoscRouter); 
 app.use("/Like", LikeRouter); 
 app.use("/opciones", OpcionesRouter); 
 
