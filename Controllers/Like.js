@@ -1,5 +1,7 @@
 import { client } from '../dbconfig.js'; 
 
+
+
 const getIDDonantes = async (req, res) => {
     const query = 'SELECT "IDdonantes" FROM "Donantes"';
 
@@ -35,7 +37,9 @@ const getIDlike = async (req, res) => {
 
 const donantes = {
     getIDDonantes,
-    getIDlike
+    getIDlike,
+    
+    
 };
 
 export default donantes;

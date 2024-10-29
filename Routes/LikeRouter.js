@@ -3,8 +3,9 @@ import Like from '../Controllers/Like.js';  // Verifica la ruta y el contenido d
 
 const router = express.Router();
 
+
 // Devolver donante específico
-router.get("/donantes/:id", Like.getIDDonantes);
+router.get("/Like/:id", Like.getIDDonantes);
 
 // Devolver donante específico
 router.get("/Like/:id", Like.getIDlike);
