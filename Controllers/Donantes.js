@@ -1,6 +1,30 @@
 import { client } from '../dbconfig.js'; 
+import cloudinary from 'cloudinary';
+import { v2 as cloudinaryV2 } from 'cloudinary';
+import multer from 'multer';
 
+// Configura Cloudinary (asegúrate de hacer esto en un archivo separado o en un lugar centralizado)
+cloudinaryV2.config({
+    cloud_name: 'df8yoixyy', 
+    api_key: '335398466712473', 
+    api_secret: 'WTQLTAWJmRFe1nVreu1OkxrZlow' 
+});
+
+// Conectar a la base de datos (asegúrate de hacer esto en el lugar adecuado de tu aplicación)
 await client.connect();
+
+// Configuración de Multer para almacenar temporalmente las imágenes
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads'); // Asegúrate de que esta carpeta exista
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({ storage: storage });
 
 // Validar campos únicos (username, email, whatsapp)
 const Chekdoble = async (Username, Email, Numero_de_watshapp, id = null) => {
@@ -43,35 +67,41 @@ const getDonantes = async (req, res) => {
     }
 };
 
-// Crear donante
+// Crear donante (modificado para manejar la imagen)
 const createDonante = async (req, res) => {
-    const { Codigo_postal, Numero_de_watshapp, Like, Foto_de_perfil, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion } = req.body;
-
-    // Verificar si se proporcionaron los datos obligatorios
-    if (!Username || !Email || !Numero_de_watshapp) {
-        return res.status(400).json({ message: "Se requiere Username, Email y Número de WhatsApp" });
+    // Verifica si se ha subido una imagen
+    if (!req.file) {
+        return res.status(400).json({ message: "Se requiere una imagen de perfil" });
     }
 
-    // Verificar si el username, email o whatsapp ya existen
     try {
+        // Subir imagen a Cloudinary
+        const result = await cloudinaryV2.uploader.upload(req.file.path);
+        const Foto_de_perfil = result.secure_url; // URL segura de la imagen en Cloudinary
+
+        const { Codigo_postal, Numero_de_watshapp, Like, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion } = req.body;
+
+        // Verificar si se proporcionaron los datos obligatorios
+        if (!Username || !Email || !Numero_de_watshapp) {
+            return res.status(400).json({ message: "Se requiere Username, Email y Número de WhatsApp" });
+        }
+
+        // Verificar si el username, email o whatsapp ya existen
         const duplicate = await Chekdoble(Username, Email, Numero_de_watshapp);
         if (duplicate) {
             return res.status(400).json({ message: `${duplicate.field} ya está en uso: ${duplicate.value}` });
         }
-    } catch (error) {
-        return res.status(500).json({ message: "Error al verificar campos únicos", error: error.message });
-    }
 
-    const query = `
-        INSERT INTO "Donantes" 
-        ("Codigo_postal", "Numero_de_watshapp", "Like", "Foto_de_perfil", "Done", "Username", "Password", "Name_and_Lastname", "Email", "Fecha_de_nacimiento", "Direccion") 
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
-        RETURNING "ID"
-    `;
+        const query = `
+            INSERT INTO "Donantes" 
+            ("Codigo_postal", "Numero_de_watshapp", "Like", "Foto_de_perfil", "Done", "Username", "Password", "Name_and_Lastname", "Email", "Fecha_de_nacimiento", "Direccion") 
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+            RETURNING "ID"
+        `;
 
-    try {
-        const result = await client.query(query, [Codigo_postal, Numero_de_watshapp, Like, Foto_de_perfil, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion]);
-        res.json({ message: "Donante registrado correctamente", idDonante: result.rows[0].ID });
+        const resultInsert = await client.query(query, [Codigo_postal, Numero_de_watshapp, Like, Foto_de_perfil, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion]);
+        res.json({ message: "Donante registrado correctamente", idDonante: resultInsert.rows[0].ID });
+
     } catch (error) {
         console.error('Error al registrar Donante:', error);
         res.status(500).json({ message: "Error al registrar Donante", error: error.message });
@@ -81,7 +111,7 @@ const createDonante = async (req, res) => {
 // Actualizar donante
 const updateDonante = async (req, res) => {
     const id = parseInt(req.params.id);
-    const { Codigo_postal, Numero_de_watshapp, Like, Foto_de_perfil, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion } = req.body;
+    const { Codigo_postal, Numero_de_watshapp, Like, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion } = req.body;
 
     // Verificar si se proporcionaron los datos obligatorios
     if (!Username || !Email || !Numero_de_watshapp) {
@@ -90,7 +120,7 @@ const updateDonante = async (req, res) => {
 
     // Verificar si el username, email o whatsapp ya existen (excluyendo al donante actual)
     try {
-        const duplicate = await checkDuplicateFields(Username, Email, Numero_de_watshapp, id);
+        const duplicate = await Chekdoble(Username, Email, Numero_de_watshapp, id);
         if (duplicate) {
             return res.status(400).json({ message: `${duplicate.field} ya está en uso: ${duplicate.value}` });
         }
@@ -116,7 +146,7 @@ const updateDonante = async (req, res) => {
     `;
 
     try {
-        const result = await client.query(query, [Password, Email, Numero_de_watshapp, Name_and_Lastname, Fecha_de_nacimiento, Direccion, Codigo_postal, Like, Foto_de_perfil, Done, Username, id]);
+        const result = await client.query(query, [Password, Email, Numero_de_watshapp, Name_and_Lastname, Fecha_de_nacimiento, Direccion, Codigo_postal, Like, req.file ? result.secure_url : null, Done, Username, id]);
         if (result.rowCount > 0) {
             res.json({ message: "Donante actualizado correctamente" });
         } else {
@@ -169,17 +199,12 @@ const getDonanteById = async (req, res) => {
     }
 };
 
-
-
-
-
 const donantes = {
     getDonantes,
     createDonante,
     updateDonante,
     deleteDonante,
     getDonanteById,
-
 };
 
 export default donantes;

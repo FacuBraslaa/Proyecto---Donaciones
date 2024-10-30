@@ -1,4 +1,4 @@
-###
+### Regristar un Donante //funciona
 POST http://localhost:3000/donantes HTTP/1.1
 Content-Type: application/json
 
@@ -17,23 +17,22 @@ Content-Type: application/json
     "Direccion": "Cabildo"
 }
 
-# SELECT * FROM "Donantes" WHERE Numero_de_watshapp=$1 or Username=$2 or Email=$3 
 
-### eliminar un donante existente
+### eliminar un donante existente // funciona
 DELETE http://localhost:3000/donantes/2 HTTP/1.1
 Content-Type: application/json
 
 
-###
+### //funciona
 GET http://localhost:3000/donantes HTTP/1.1
 Content-Type: application/json
 
-###
+### // funciona
 GET http://localhost:3000/donantes/6 HTTP/1.1
 Content-Type: application/json
 
 ###
- ### 
+ ### funciona
 PUT http://localhost:3000/donantes/1 HTTP/1.1
 Content-Type: application/json
 
@@ -52,7 +51,7 @@ Content-Type: application/json
 }
 
 // Postear las opciones y las subopciones
-###
+### // funciona
 POST http://localhost:3000/Opciones HTTP/1.1
 Content-Type: application/json
 
@@ -60,7 +59,7 @@ Content-Type: application/json
     "Nombres": "Ropa" 
 }
 
-###
+### // funciona
 GET http://localhost:3000/Opciones HTTP/1.1
 Content-Type: application/json
 
@@ -70,7 +69,7 @@ Content-Type: application/json
 
 // Categorias e ID de donante
 
-###
+### // funciona
 GET http://localhost:3000/donantes/5 HTTP/1.1
 Content-Type: application/json
 
@@ -78,13 +77,13 @@ Content-Type: application/json
 GET http://localhost:3000/opciones/4 HTTP/1.1
 Content-Type: application/json
 
-###
+###  //funciona
 GET http://localhost:3000/opciones/ HTTP/1.1
 Content-Type: application/json
 
 // Obtener los donantes que le dio like a una ong-osc
 
-###
+### // funciona
 GET http://localhost:3000/donantes/5 HTTP/1.1
 Content-Type: application/json
 
@@ -94,7 +93,7 @@ Content-Type: application/json
 
 // Todo lo que tenga que ver con ongosc
 
-//funciona
+###//funciona
 POST http://localhost:3000/ongosc HTTP/1.1
 Content-Type: application/json
 
@@ -112,44 +111,44 @@ Content-Type: application/json
     "Done": true   
 }
 
-### Busca a todas las ongosc, funciona
+### Busca a todas las ongosc //funciona
 GET http://localhost:3000/Ongosc HTTP/1.1
 Content-Type: application/json
 
-### Buscar una ongosc por id
+### Buscar una ongosc por id // funciona
 GET http://localhost:3000/Ongosc/1 HTTP/1.1
 Content-Type: application/json
 
-### Actualizar ongosc
+### Actualizar ongosc // funciona
 PUT http://localhost:3000/ongosc/1 HTTP/1.1
 Content-Type: application/json
 
 {
-    "Username": "TomasGrinstein1",
+    "Username": "TomasGrinstein2",
     "Codigo_postal": 1456,
-    "Email": "Tomasgrinstein@gmail.zom",
+    "Email": "Tomasgrinstein@gmail.iom",
     "Numero_de_watshapp": 91180378710,
     "UsernameOrganizacion": "Mano en Mano", 
     "Password": "Totito123",
     "Direccion": "Libertador",
-    "Cuit": "12345678944",
+    "Cuit": "12345678444",
     "Foto_de_perfil": "URL",
     "Like": true,
     "Done": true   
 }
 
 
-### Eliminar una ongosc existente
-DELETE http://localhost:3000/ongosc/10 HTTP/1.1
+### Eliminar una ongosc existente // funciona
+DELETE http://localhost:3000/ongosc/2 HTTP/1.1
 Content-Type: application/json
 
 // Donaciones
 
-### Buscar donante que dono por id
-GET http://localhost:3000/donantes/1 HTTP/1.1
+### Buscar donante que dono por id // funciona
+GET http://localhost:3000/donantes/4 HTTP/1.1
 Content-Type: application/json
 
-### Buscar ongosc que dono por id
+### Buscar ongosc que dono por id // funciona
 GET http://localhost:3000/ongosc/1 HTTP/1.1
 Content-Type: application/json
 
