@@ -35,10 +35,10 @@ const Chekdoble = async (Username, Email, Numero_de_watshapp, Cuit, id = null) =
 const getOngosc = async (req, res) => {
     try {
         const result = await client.query('SELECT * FROM "Ongosc"');
-        res.json(result.rows); // Envía los resultados como respuesta
+        return res.json(result.rows); // Envía los resultados como respuesta
     } catch (err) {
         console.error('Error ejecutando la consulta', err.stack);
-        res.status(500).json({ message: 'Error al obtener Ongosc', error: err.message });
+        return res.status(500).json({ message: 'Error al obtener Ongosc', error: err.message });
     }
 };
 
@@ -57,10 +57,10 @@ const getongoscById = async (req, res) => {
         if (result.rows.length === 0) {
             return res.status(404).json({ message: "Ongosc no encontrado" });
         }
-        res.json(result.rows[0]); // Envía el donante encontrado como respuesta
+        return res.json(result.rows[0]); // Envía el donante encontrado como respuesta
     } catch (error) {
         console.error('Error al obtener Ongosc por ID:', error);
-        res.status(500).json({ message: "Error al obtener Ongosc", error: error.message });
+        return res.status(500).json({ message: "Error al obtener Ongosc", error: error.message });
     }
 };
 
@@ -93,10 +93,10 @@ const createOngosc = async (req, res) => {
 
     try {
         const result = await client.query(query, [Username, Codigo_postal, Email, Numero_de_watshapp, UsernameOrganizacion, Password, Direccion, Cuit, Foto_de_perfil, Like, Done]);
-        res.json({ message: "Ongosc registrado correctamente", idOngosc: result.rows[0].ID });
+        return res.json({ message: "Ongosc registrado correctamente", idOngosc: result.rows[0].ID });
     } catch (error) {
         console.error('Error al registrar Ongosc:', error);
-        res.status(500).json({ message: "Error al registrar Ongosc", error: error.message });
+        return res.status(500).json({ message: "Error al registrar Ongosc", error: error.message });
     }
 };
 
@@ -129,10 +129,10 @@ const updateOngosc = async (req, res) => {
 
     try {
         await client.query(query, [Username, Codigo_postal, Email, Numero_de_watshapp, UsernameOrganizacion, Password, Direccion, Cuit, Foto_de_perfil, Like, Done, id]);
-        res.json({ message: "Ongosc actualizado correctamente" });
+       return res.json({ message: "Ongosc actualizado correctamente" });
     } catch (error) {
         console.error('Error al actualizar Ongosc:', error);
-        res.status(500).json({ message: "Error al actualizar Ongosc", error: error.message });
+        return res.status(500).json({ message: "Error al actualizar Ongosc", error: error.message });
     }
 };
 
@@ -151,10 +151,10 @@ const deleteOngosc = async (req, res) => {
         if (result.rowCount === 0) {
             return res.status(404).json({ message: "Ongosc no encontrado" });
         }
-        res.json({ message: "Ongosc eliminado correctamente" });
+        return res.json({ message: "Ongosc eliminado correctamente" });
     } catch (error) {
         console.error('Error al eliminar Ongosc:', error);
-        res.status(500).json({ message: "Error al eliminar Ongosc", error: error.message });
+        return res.status(500).json({ message: "Error al eliminar Ongosc", error: error.message });
     }
 };
 

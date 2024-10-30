@@ -15,10 +15,10 @@ const crearOpciones = async (req, res) => {
     try {
         const result = await client.query(query, [Nombres]);
         const idOpciones = result.rows[0].IdOpciones; 
-        res.json({ message: "Opción registrada correctamente", idOpciones });
+        return res.json({ message: "Opción registrada correctamente", idOpciones });
     } catch (error) {
         console.error('Error al registrar Opción:', error);
-        res.status(500).json({ message: "Error al registrar Opción", error: error.message });
+        return res.status(500).json({ message: "Error al registrar Opción", error: error.message });
     }
 };
 
@@ -26,10 +26,10 @@ const crearOpciones = async (req, res) => {
 const getOpciones = async (req, res) => {
     try {
         const result = await client.query('SELECT * FROM "Opciones"');
-        res.json(result.rows); 
+        return res.json(result.rows); 
     } catch (err) {
         console.error('Error ejecutando la consulta', err.stack);
-        res.status(500).json({ message: 'Error al obtener Opciones', error: err.message });
+        return res.status(500).json({ message: 'Error al obtener Opciones', error: err.message });
     }
 };
 
@@ -47,13 +47,13 @@ const deleteOpcion = async (req, res) => {
         const result = await client.query(query, [idOpciones]);
 
         if (result.rowCount === 0) {
-            res.status(404).json({ message: "Opción no encontrada" });
+            return res.status(404).json({ message: "Opción no encontrada" });
         } else {
-            res.json({ message: "Opción eliminada correctamente" });
+            return res.json({ message: "Opción eliminada correctamente" });
         }
     } catch (error) {
         console.error('Error al eliminar la opción:', error);
-        res.status(500).json({ message: "Error al eliminar la opción", error: error.message });
+        return res.status(500).json({ message: "Error al eliminar la opción", error: error.message });
     }
 };
 

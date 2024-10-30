@@ -67,10 +67,7 @@ app.use("/ongosc", OngoscRouter);
 app.use("/Like", LikeRouter); 
 app.use("/opciones", OpcionesRouter); 
 
-// Manejo de error 404
-app.use((req, res) => {
-    res.status(404).send('Lo siento, no se ha encontrado la página solicitada. ERROR 404');
-});
+
 
 // Iniciar el servidor
 app.listen(port, () => {

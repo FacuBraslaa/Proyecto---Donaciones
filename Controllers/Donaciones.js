@@ -7,13 +7,13 @@ const getIDOngosc = async (req, res) => {
     try {
         const result = await client.query(query);
         if (result.rows.length > 0) {
-            res.json(result.rows); // Mostrar todos los IDs de Ongosc
+            return res.json(result.rows); // Mostrar todos los IDs de Ongosc
         } else {
-            res.status(404).json({ message: "No se encontraron Ongosc" });
+            return res.status(404).json({ message: "No se encontraron Ongosc" });
         }
     } catch (error) {
         console.error('Error al obtener ID de Ongosc:', error);
-        res.status(500).json({ message: "Error al obtener ID de Ongosc", error: error.message });
+        return res.status(500).json({ message: "Error al obtener ID de Ongosc", error: error.message });
     }
 };
 
@@ -24,13 +24,13 @@ const getIDDonantes = async (req, res) => {
     try {
         const result = await client.query(query);
         if (result.rows.length > 0) {
-            res.json(result.rows); // Mostrar todos los ID de Donantes
+            return res.json(result.rows); // Mostrar todos los ID de Donantes
         } else {
-            res.status(404).json({ message: "No se encontraron donantes" });
+           return res.status(404).json({ message: "No se encontraron donantes" });
         }
     } catch (error) {
         console.error('Error al obtener IDdonantes:', error);
-        res.status(500).json({ message: "Error al obtener IDdonantes", error: error.message });
+        return res.status(500).json({ message: "Error al obtener IDdonantes", error: error.message });
     }
 };
 
@@ -40,13 +40,13 @@ const getIDDonaciones = async (req, res) => {
     try {
         const result = await client.query(query);
         if (result.rows.length > 0) {
-            res.json(result.rows); // Mostrar todos los ID de Like
+          return  res.json(result.rows); // Mostrar todos los ID de Like
         } else {
-            res.status(404).json({ message: "No se encontraron donaciones" });
+           return res.status(404).json({ message: "No se encontraron donaciones" });
         }
     } catch (error) {
         console.error('Error al obtener IDLike:', error);
-        res.status(500).json({ message: "Error al obtener IDLike", error: error.message });
+       return res.status(500).json({ message: "Error al obtener IDLike", error: error.message });
     }
 };
 
