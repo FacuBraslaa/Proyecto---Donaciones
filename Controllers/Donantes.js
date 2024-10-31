@@ -1,12 +1,13 @@
-import { client } from '../dbconfig.js'; 
+import { client } from '../dbconfig.js';
 import { v2 as cloudinaryV2 } from 'cloudinary';
 import multer from 'multer';
+import bcrypt from "bcrypt";
 
 // Configura Cloudinary (asegúrate de hacer esto en un archivo separado o en un lugar centralizado)
 cloudinaryV2.config({
-    cloud_name: 'df8yoixyy', 
-    api_key: '335398466712473', 
-    api_secret: 'WTQLTAWJmRFe1nVreu1OkxrZlow' 
+    cloud_name: 'df8yoixyy',
+    api_key: '335398466712473',
+    api_secret: 'WTQLTAWJmRFe1nVreu1OkxrZlow'
 });
 
 // Conectar a la base de datos (asegúrate de hacer esto en el lugar adecuado de tu aplicación)
@@ -31,9 +32,9 @@ const Chekdoble = async (Username, Email, Numero_de_watshapp, id = null) => {
         SELECT * FROM "Donantes"
         WHERE ("Username" = $1 OR "Email" = $2 OR "Numero_de_watshapp" = $3)
     `;
-    
+
     const values = [Username, Email, Numero_de_watshapp];
-    
+
     // Excluir el donante actual en caso de actualización
     if (id) {
         query += ` AND "ID" != $4`;
@@ -55,30 +56,99 @@ const Chekdoble = async (Username, Email, Numero_de_watshapp, id = null) => {
     }
 };
 
+// log out donante
+const logoutDonante =  async (req, res) => {
+    req.session.destroy((err) => {
+      if (err) return res.send('Error al cerrar sesión');
+      res.send('Sesión cerrada');
+    });
+  }
+  
+
+// logear donante
+const loginDonante = async (req, res) => {
+    const { Username, Password } = req.body;
+    try {
+        const result = await client.query('SELECT * FROM "Donantes" WHERE "Username" = $1', [Username]);
+        console.log(
+            "asdasd",result.rows)
+        if (result.rows.length !== 1) return res.status(404).json({ message: "No se encontro usuario" });
+        const user = result.rows[0] 
+
+        if (bcrypt.compareSync(Password, user.Password)) {
+            req.session.donanteId = user.ID;
+            return res.send('Inicio de sesión exitoso');
+          } else {
+            return res.send('Contraseña incorrecta');
+          }
+
+        return res.json(result.rows); // Envía los resultados como respuesta
+    } catch (err) {
+        console.error('Error buscando el username', err.stack);
+        return res.status(500).json({ message: 'Error al obtener username', error: err.message });
+    }
+
+    // Verificar si el username, email o whatsapp ya existen
+    const duplicate = await Chekdoble(Username);
+    if (duplicate) {
+        return res.status(400).json({ message: `${duplicate.field} ya está en uso: ${duplicate.value}` });
+    }
+
+    //si existe validar con la funcion de bcrypt que las contrasenas sean las mismas
+    //setear la sesion
+
+}
+
+
 // Obtener todos los donantes
 const getDonantes = async (req, res) => {
     try {
         const result = await client.query('SELECT * FROM "Donantes"');
-       return res.json(result.rows); // Envía los resultados como respuesta
+        return res.json(result.rows); // Envía los resultados como respuesta
     } catch (err) {
         console.error('Error ejecutando la consulta', err.stack);
-       return res.status(500).json({ message: 'Error al obtener donantes', error: err.message });
+        return res.status(500).json({ message: 'Error al obtener donantes', error: err.message });
     }
 };
 
-// Crear donante (modificado para manejar la imagen)
-const createDonante = async (req, res) => {
+const actualizarFoto = async (req, res) => {
     // Verifica si se ha subido una imagen
     if (!req.file) {
         return res.status(400).json({ message: "Se requiere una imagen de perfil" });
     }
 
+    const id = parseInt(req.params.id);
+
+    console.log(req.body)
     try {
         // Subir imagen a Cloudinary
         const result = await cloudinaryV2.uploader.upload(req.file.path);
         const Foto_de_perfil = result.secure_url; // URL segura de la imagen en Cloudinary
 
+
+        const query = `
+            UPDATE "Donantes"
+            SET 
+            "Foto_de_perfil" = $1
+            WHERE "ID" = $2
+        `;
+
+        const resultInsert = await client.query(query, [Foto_de_perfil, id]);
+        return res.json({ message: "Se subio la foto correctamente" });
+
+    } catch (error) {
+        console.error('No se ha podido subir la foto:', error);
+        return res.status(500).json({ message: "No se ha podido subir la foto", error: error.message });
+    }
+};
+
+// Crear donante (modificado para manejar la imagen)
+const createDonante = async (req, res) => {
+
+    try {
+
         const { Codigo_postal, Numero_de_watshapp, Like, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion } = req.body;
+        const hashedPassword = bcrypt.hashSync(Password, 10);
 
         // Verificar si se proporcionaron los datos obligatorios
         if (!Username || !Email || !Numero_de_watshapp) {
@@ -93,12 +163,12 @@ const createDonante = async (req, res) => {
 
         const query = `
             INSERT INTO "Donantes" 
-            ("Codigo_postal", "Numero_de_watshapp", "Like", "Foto_de_perfil", "Done", "Username", "Password", "Name_and_Lastname", "Email", "Fecha_de_nacimiento", "Direccion") 
-            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+            ("Codigo_postal", "Numero_de_watshapp", "Like", "Done", "Username", "Password", "Name_and_Lastname", "Email", "Fecha_de_nacimiento", "Direccion") 
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
             RETURNING "ID"
         `;
 
-        const resultInsert = await client.query(query, [Codigo_postal, Numero_de_watshapp, Like, Foto_de_perfil, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion]);
+        const resultInsert = await client.query(query, [Codigo_postal, Numero_de_watshapp, Like, Done, Username, hashedPassword, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion]);
         return res.json({ message: "Donante registrado correctamente", idDonante: resultInsert.rows[0].ID });
 
     } catch (error) {
@@ -111,6 +181,7 @@ const createDonante = async (req, res) => {
 const updateDonante = async (req, res) => {
     const id = parseInt(req.params.id);
     const { Codigo_postal, Numero_de_watshapp, Like, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion } = req.body;
+    const hashedPassword = bcrypt.hashSync(Password, 10);
 
     // Verificar si se proporcionaron los datos obligatorios
     if (!Username || !Email || !Numero_de_watshapp) {
@@ -138,14 +209,13 @@ const updateDonante = async (req, res) => {
         "Direccion" = $6, 
         "Codigo_postal" = $7,
         "Like" = $8,
-        "Foto_de_perfil" = $9,
-        "Done" = $10,
-        "Username" = $11
-        WHERE "ID" = $12
+        "Done" = $9,
+        "Username" = $10
+        WHERE "ID" = $11
     `;
 
     try {
-        const result = await client.query(query, [Password, Email, Numero_de_watshapp, Name_and_Lastname, Fecha_de_nacimiento, Direccion, Codigo_postal, Like, req.file ? result.secure_url : null, Done, Username, id]);
+        const result = await client.query(query, [hashedPassword, Email, Numero_de_watshapp, Name_and_Lastname, Fecha_de_nacimiento, Direccion, Codigo_postal, Like, Done, Username, id]);
         if (result.rowCount > 0) {
             return res.json({ message: "Donante actualizado correctamente" });
         } else {
@@ -204,6 +274,9 @@ const donantes = {
     updateDonante,
     deleteDonante,
     getDonanteById,
+    actualizarFoto,
+    loginDonante,
+    logoutDonante,
 };
 
 export default donantes;

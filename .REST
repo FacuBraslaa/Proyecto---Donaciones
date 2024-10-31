@@ -5,18 +5,26 @@ Content-Type: application/json
 {
     
     "Codigo_postal": 1427,
-    "Numero_de_watshapp": 91140478093,
+    "Numero_de_watshapp": 91149478093,
     "Like": true,
-    "Foto_de_perfil": "URL",
     "Done": true, 
-    "Username": "FacuBrasla5",
+    "Username": "FacuBrasla7",
     "Password": "facu123",
     "Name_and_Lastname": "Facundo Braslavsky",
-    "Email": "facubrasla5@gmail.com",
+    "Email": "facubrasl39@gmail.com",
     "Fecha_de_nacimiento": "2007-12-05",
     "Direccion": "Cabildo"
 }
 
+### Loguear un Donante //funciona
+
+POST http://localhost:3000/donantes/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "Username": "FacuBras2a",
+    "Password": "fac9483"
+}
 
 ### eliminar un donante existente // funciona
 DELETE http://localhost:3000/donantes/2 HTTP/1.1
@@ -28,24 +36,24 @@ GET http://localhost:3000/donantes HTTP/1.1
 Content-Type: application/json
 
 ### // funciona
-GET http://localhost:3000/donantes/6 HTTP/1.1
+GET http://localhost:3000/donantes/11 HTTP/1.1
 Content-Type: application/json
 
 ###
  ### funciona
-PUT http://localhost:3000/donantes/1 HTTP/1.1
+PUT http://localhost:3000/donantes/2 HTTP/1.1
 Content-Type: application/json
 
 {
     "Codigo_postal": 1421,
-    "Numero_de_watshapp": 91140478091,
+    "Numero_de_watshapp": 91142478091,
     "Like": true,
     "Foto_de_perfil": "Fotodeperfil",
     "Done": true, 
-    "Username": "FacuBrasla",
-    "Password": "facu123",
+    "Username": "FacuBras2la",
+    "Password": "fac4483",
     "Name_and_Lastname": "Facundo Braslavsky",
-    "Email": "facubrasla@gmail.com",
+    "Email": "facubrasl5@gmail.com",
     "Fecha_de_nacimiento": "2007-12-05",
     "Direccion": "Cabildo"
 }
