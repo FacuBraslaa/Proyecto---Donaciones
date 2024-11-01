@@ -1,10 +1,10 @@
-import "dotenv/config"
-import pg from "pg"; // Importamos el cliente de pg (recordar que para utilizar 'import' es necesario usar "type": "module" en el package.json)
+import "dotenv/config";
+import pg from "pg";
 
-const { Client } = pg;
+const { Pool } = pg;
 
-// Pueden (y deberían) utilizar variables de entorno para almacenar los datos de conexión (dotenv)
-export const client = new Client({
+// Configuración del pool de conexiones
+export const pool = new Pool({
     user: "default",
     host: "ep-purple-mountain-a4zkc965-pooler.us-east-1.aws.neon.tech",
     database: "verceldb",
@@ -12,3 +12,8 @@ export const client = new Client({
     port: 5432,
     ssl: true
 });
+
+export default pool;
+
+
+

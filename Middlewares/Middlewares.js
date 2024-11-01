@@ -1,4 +1,4 @@
-import { client } from '../dbconfig.js';
+import pool from '../dbconfig.js';
 
 export const validarDonanteLogueado = async (req, res, next) => {
     next();
@@ -7,7 +7,7 @@ export const validarDonanteLogueado = async (req, res, next) => {
 };
 
 
-export const validarOngLogueado = async (req, res, next) => {
+export const validarOngoscLogueado = async (req, res, next) => {
      next();
     //if (req.session.ongId) next();
     //return res.status(403).json({ message: "Ong no autenticado" });

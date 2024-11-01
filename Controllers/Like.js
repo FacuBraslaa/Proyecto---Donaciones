@@ -1,12 +1,10 @@
-import { client } from '../dbconfig.js'; 
-
-
+import pool from '../dbconfig.js';
 
 const getIDDonantes = async (req, res) => {
     const query = 'SELECT "IDdonantes" FROM "Donantes"';
 
     try {
-        const result = await client.query(query);
+        const result = await pool.query(query);
         if (result.rows.length > 0) {
             return res.json(result.rows); // Mostrar todos los IDdonantes
         } else {
@@ -22,11 +20,11 @@ const getIDlike = async (req, res) => {
     const query = 'SELECT "IDlike" FROM "Like"';
 
     try {
-        const result = await client.query(query);
+        const result = await pool.query(query);
         if (result.rows.length > 0) {
             return res.json(result.rows); // Mostrar todos los IDLike
         } else {
-            return res.status(404).json({ message: "No se encontraron donantes" });
+            return res.status(404).json({ message: "No se encontraron registros en Like" });
         }
     } catch (error) {
         console.error('Error al obtener IDLike:', error);
@@ -34,12 +32,9 @@ const getIDlike = async (req, res) => {
     }
 };
 
-
 const donantes = {
     getIDDonantes,
     getIDlike,
-    
-    
 };
 
 export default donantes;

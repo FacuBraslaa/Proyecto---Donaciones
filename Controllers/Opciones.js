@@ -1,10 +1,9 @@
-import { client } from '../dbconfig.js'; 
+import pool from '../dbconfig.js';
 
 // Crear Opciones
 const crearOpciones = async (req, res) => {
     const { Nombres } = req.body;
 
-    
     const query = `
         INSERT INTO "Opciones" 
             ("Nombres")
@@ -13,8 +12,8 @@ const crearOpciones = async (req, res) => {
     `;
 
     try {
-        const result = await client.query(query, [Nombres]);
-        const idOpciones = result.rows[0].IdOpciones; 
+        const result = await pool.query(query, [Nombres]);
+        const idOpciones = result.rows[0].idOpciones; 
         return res.json({ message: "Opción registrada correctamente", idOpciones });
     } catch (error) {
         console.error('Error al registrar Opción:', error);
@@ -22,10 +21,10 @@ const crearOpciones = async (req, res) => {
     }
 };
 
-// Obtener todos las opciones
+// Obtener todas las opciones
 const getOpciones = async (req, res) => {
     try {
-        const result = await client.query('SELECT * FROM "Opciones"');
+        const result = await pool.query('SELECT * FROM "Opciones"');
         return res.json(result.rows); 
     } catch (err) {
         console.error('Error ejecutando la consulta', err.stack);
@@ -33,19 +32,20 @@ const getOpciones = async (req, res) => {
     }
 };
 
-//Eliminar Opcion por ID
+// Eliminar Opción por ID
 const deleteOpcion = async (req, res) => {
-    const { idOpciones } = req.params; 
+    // Desestructurando el ID correcto
+    const { id } = req.params; 
 
-    
     const query = `
         DELETE FROM "Opciones"
         WHERE "idOpciones" = $1
     `;
 
     try {
-        const result = await client.query(query, [idOpciones]);
+        const result = await pool.query(query, [id]);
 
+        // Comprobando si se eliminó alguna fila
         if (result.rowCount === 0) {
             return res.status(404).json({ message: "Opción no encontrada" });
         } else {
@@ -56,7 +56,6 @@ const deleteOpcion = async (req, res) => {
         return res.status(500).json({ message: "Error al eliminar la opción", error: error.message });
     }
 };
-
 
 
 const OpcionesController = {
