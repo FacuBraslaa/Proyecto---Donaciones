@@ -1,7 +1,7 @@
 import pool from '../dbconfig.js';
 import { v2 as cloudinaryV2 } from 'cloudinary';
 import multer from 'multer';
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import path from "path";
 
 // Configura Cloudinary
