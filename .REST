@@ -100,17 +100,29 @@ POST http://localhost:3000/Like/3
 Content-Type: application/json
 
 {
-    "IDdonante": 4
+    "IDdonante": 6
 }
 
 
-### Obtener todos los likes
-GET http://localhost:3000/likes HTTP/1.1
+### Obtener todos los likes // funciona
+GET http://localhost:3000/like HTTP/1.1
 Content-Type: application/json
 
-### Obtener todos los likes
-GET http://localhost:3000/likes/4 HTTP/1.1
+### Obtener todos los likes // funciona
+GET http://localhost:3000/like/6 HTTP/1.1
 Content-Type: application/json
+
+### Obtener todos los likes 
+DELETE http://localhost:3000/like/6 HTTP/1.1
+Content-Type: application/json
+{
+    "IDlike":24
+}
+
+
+
+
+
 // Todo lo que tenga que ver con ongosc
 
 ###//funciona
