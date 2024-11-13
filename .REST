@@ -95,23 +95,22 @@ Content-Type: application/json
 
 // Obtener los donantes que le dio like a una ong-osc
 
-### Insertar un like de donante a ongosc
+### Insertar un like de donante a ongosc // funciona
 POST http://localhost:3000/Like/3
 Content-Type: application/json
 
-
-
-
-
-### Obtener el ID del like por su ID (ID = 4)
-GET http://localhost:3000/like/4 HTTP/1.1
-Content-Type: application/json
+{
+    "IDdonante": 4
+}
 
 
 ### Obtener todos los likes
 GET http://localhost:3000/likes HTTP/1.1
 Content-Type: application/json
 
+### Obtener todos los likes
+GET http://localhost:3000/likes/4 HTTP/1.1
+Content-Type: application/json
 // Todo lo que tenga que ver con ongosc
 
 ###//funciona

@@ -1,22 +1,18 @@
 import express from 'express';
 import Like from '../Controllers/Like.js';  // Verifica la ruta y el contenido del controlador
-import { validarDonanteLogueado } from '../Middlewares/Middlewares.js';
+
 
 const router = express.Router();
 
 
-// Devolver donante específico
-router.get("/Like/:id", validarDonanteLogueado, Like.getIDDonantes);
+router.get("/", Like.getLikes);
 
-// Devolver donante específico
-router.get("/Like/:id", Like.getIDlike);
+// Devolver el ID del like de un donante específico
+router.get("/:IDdonante", Like.getIDdonanteparalike);
 
-// Devolver donante específico
-router.post("/Like/:IDongosc", Like.insertLike);
+// Insertar Like para un donante
+router.post("/:IDongosc", Like.insertLike);
 
-// Devolver donante específico
-router.get("/getlike/", Like.getLikes);
-
+// Obtener todos los likes
 
 export default router;
-
