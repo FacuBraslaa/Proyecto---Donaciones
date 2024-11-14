@@ -112,12 +112,15 @@ Content-Type: application/json
 GET http://localhost:3000/like/6 HTTP/1.1
 Content-Type: application/json
 
-### Obtener todos los likes 
+### eliminar un like especifico de un donante // funciona
 DELETE http://localhost:3000/like/6 HTTP/1.1
 Content-Type: application/json
+
 {
-    "IDlike":24
+    "IDlike":25
 }
+
+
 
 
 

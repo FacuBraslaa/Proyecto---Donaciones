@@ -60,9 +60,14 @@ const getLikes = async (req, res) => {
     }
 };
 
-// Eliminar un like específico de un donante usando su IDdonante y IDlike
 const deleteLikeByDonante = async (req, res) => {
-    const { IDdonante, IDlike } = req.params;  // Obtener tanto el IDdonante como el IDlike desde los parámetros de la ruta
+    const { IDdonante } = req.params;   // Obtener IDdonante desde los parámetros de la ruta
+    const { IDlike } = req.body;        // Obtener IDlike desde el cuerpo de la solicitud
+    
+    // Verificar que ambos valores estén presentes
+    if (!IDdonante || !IDlike) {
+        return res.status(400).json({ message: "IDdonante y IDlike son requeridos" });
+    }
 
     try {
         // Eliminar el like específico del donante
@@ -81,6 +86,8 @@ const deleteLikeByDonante = async (req, res) => {
         return res.status(500).json({ message: "Error al eliminar el like", error: error.message });
     }
 };
+
+
 
 
 const donantes = {
