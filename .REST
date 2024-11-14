@@ -188,13 +188,21 @@ Content-Type: application/json
 
 // Donaciones
 
-### Buscar donante que dono por id // funciona
-GET http://localhost:3000/donantes/4 HTTP/1.1
+### 
+GET http://localhost:3000/Donaciones/6 HTTP/1.1
 Content-Type: application/json
 
-### Buscar ongosc que dono por id // funciona
-GET http://localhost:3000/ongosc/1 HTTP/1.1
+### poner una donacion por parte e un donante a una ongosc
+
+POST http://localhost:3000/Donaciones/3 HTTP/1.1
 Content-Type: application/json
+
+{
+    "IDdonantes":6
+}
+
+
+
 
 
 

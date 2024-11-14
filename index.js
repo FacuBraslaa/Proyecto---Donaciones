@@ -8,6 +8,7 @@ import CategoriaRouter from './Routes/CategoriaRouter.js';
 import OngoscRouter from './Routes/OngoscRouter.js';
 import LikeRouter from './Routes/LikeRouter.js';
 import OpcionesRouter from './Routes/OpcionesRouter.js';
+import DonacionesRouter from './Routes/DonacionesRouter.js';  // Corregido: cambiado a DonacionesRouter
 
 const app = express();
 const port = 3000;
@@ -16,14 +17,14 @@ app.use(express.json());
 
 (async function() {
     try {
-        // Configuration
+        // Cloudinary configuration
         cloudinary.config({ 
             cloud_name: 'df8yoixyy', 
             api_key: '335398466712473', 
             api_secret: 'WTQLTAWJmRFe1nVreu1OkxrZlow' 
         });
 
-        // Upload an image
+        // Upload an image to Cloudinary
         const uploadResult = await cloudinary.uploader.upload(
             'https://res.cloudinary.com/demo/image/upload/getting-started/shoes.jpg', 
             { public_id: 'shoes' }
@@ -60,7 +61,7 @@ app.use(
       resave: false,
       saveUninitialized: false,
     })
-  );
+);
 
 // Test route
 app.get("/chau", (_, res) => {
@@ -68,7 +69,8 @@ app.get("/chau", (_, res) => {
 });
 
 // Use imported routes
-app.use("/donantes", DonantesRouter);
+app.use("/donaciones", DonacionesRouter);  // Ruta correcta para Donaciones
+app.use("/donantes", DonantesRouter);  // Ruta correcta para Donantes
 app.use("/categoria", CategoriaRouter); 
 app.use("/ongosc", OngoscRouter); 
 app.use("/Like", LikeRouter); 

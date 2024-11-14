@@ -1,16 +1,18 @@
 import express from 'express';
 import Donaciones from '../Controllers/Donaciones.js';  // Verifica la ruta y el contenido del controlador
-import { validarDonanteLogueado } from '../Middlewares/Middlewares.js';
-import { validarOngoscLogueado } from '../Middlewares/Middlewares.js';
 const router = express.Router();
 
-// Devolver ongosc específico
-router.get("/Donaciones/:id", validarOngoscLogueado, Donaciones.getIDOngosc);
 
-// Devolver donante específico
-router.get("/Donaciones/:id",validarDonanteLogueado, Donaciones.getIDDonantes);
+// Obtener todas las donaciones
+router.get("/", Donaciones.getDonaciones);
 
-// Devolver donante específico
-router.get("/Donaciones/:id",validarDonanteLogueado, Donaciones.getIDDonaciones);
+// Devolver donaciones de un donante específico por ID
+router.get("/:IDdonante", Donaciones.getIDdonanteparadonaciones);
+
+// Insertar una donación para un donante específico
+router.post("/IDongosc", Donaciones.insertDonacion); 
+
+// Eliminar una donación específica por ID de donación
+router.delete("/:IDdonante", Donaciones.deleteDonacionByDonante);
 
 export default router;
