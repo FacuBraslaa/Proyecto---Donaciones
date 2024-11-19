@@ -64,7 +64,7 @@ app.use(
 );
 
 // Test route
-app.get("/chau", (_, res) => {
+app.get("/", (_, res) => {
     res.send("Proyecto funcionando");
 });
 
