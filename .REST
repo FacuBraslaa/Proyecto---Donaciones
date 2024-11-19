@@ -188,18 +188,31 @@ Content-Type: application/json
 
 // Donaciones
 
-### 
+### pide todas las donaciones // funciona
+GET http://localhost:3000/Donaciones HTTP/1.1
+Content-Type: application/json
+
+### Pide una donacion en especifico // Funciona
 GET http://localhost:3000/Donaciones/6 HTTP/1.1
 Content-Type: application/json
 
-### poner una donacion por parte e un donante a una ongosc
+### poner una donacion por parte e un donante a una ongosc // Funciona
 
 POST http://localhost:3000/Donaciones/3 HTTP/1.1
 Content-Type: application/json
 
 {
-    "IDdonantes":6
+    "IDdonante":6
 }
+
+### Eliminar una donacion por parte de un donante // Funciona
+DELETE  http://localhost:3000/Donaciones/6 HTTP/1.1
+Content-Type: application/json
+
+{
+    "IDdonaciones":2
+}
+
 
 
 

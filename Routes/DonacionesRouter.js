@@ -10,7 +10,7 @@ router.get("/", Donaciones.getDonaciones);
 router.get("/:IDdonante", Donaciones.getIDdonanteparadonaciones);
 
 // Insertar una donación para un donante específico
-router.post("/IDongosc", Donaciones.insertDonacion); 
+router.post("/:IDongosc", Donaciones.insertDonacion); 
 
 // Eliminar una donación específica por ID de donación
 router.delete("/:IDdonante", Donaciones.deleteDonacionByDonante);
