@@ -10,26 +10,26 @@ Content-Type: application/json
     "Numero_de_watshapp": 91149478093,
     "Like": true,
     "Done": true, 
-    "Username": "FacuBrasla7",
-    "Password": "facu123",
+    "Username": "FacuBrasla2",
+    "Password": "facu13",
     "Name_and_Lastname": "Facundo Braslavsky",
-    "Email": "facubrasl39@gmail.com",
+    "Email": "facubrasl34@gmail.com",
     "Fecha_de_nacimiento": "2007-12-05",
     "Direccion": "Cabildo"
 }
 
 ### Loguear un Donante //funciona
 
-POST https://proyecto-donaciones-six.vercel.app/ogin HTTP/1.1
+POST https://proyecto-donaciones-six.vercel.app/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "Username": "FacuBras2a",
-    "Password": "fac9483"
+    "Username": "FacuBrasla1",
+    "Password": "facu123"
 }
 
 ### eliminar un donante existente // funciona
-DELETE https://proyecto-donaciones-six.vercel.app/2 HTTP/1.1
+DELETE https://proyecto-donaciones-six.vercel.app/donantes/3 HTTP/1.1
 Content-Type: application/json
 
 
@@ -66,7 +66,7 @@ POST https://proyecto-donaciones-six.vercel.app/Opciones HTTP/1.1
 Content-Type: application/json
 
 {
-    "Nombres": "Ropa" 
+    "Nombres": "Tiempo" 
 }
 
 ### // funciona
@@ -74,7 +74,7 @@ GET https://proyecto-donaciones-six.vercel.app/Opciones HTTP/1.1
 Content-Type: application/json
 
 ### //funciona
-DELETE https://proyecto-donaciones-six.vercel.app/Opciones/3 HTTP/1.1
+DELETE https://proyecto-donaciones-six.vercel.app/Opciones/9 HTTP/1.1
 Content-Type: application/json
 
 // Categorias e ID de donante
