@@ -5,7 +5,7 @@ import { v2 as cloudinary } from 'cloudinary';
 // Import routes
 import DonantesRouter from './Routes/DonantesRouter.js';
 import CategoriaRouter from './Routes/CategoriaRouter.js';
-import OngoscRouter from './Routes/OngoscRouter.js';
+import OngoscRouter from './Routes/ongoscRouter.js';
 import LikeRouter from './Routes/LikeRouter.js';
 import OpcionesRouter from './Routes/OpcionesRouter.js';
 import DonacionesRouter from './Routes/DonacionesRouter.js';  // Corregido: cambiado a DonacionesRouter
