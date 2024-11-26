@@ -7,13 +7,13 @@ Content-Type: application/json
 {
     
     "Codigo_postal": 1427,
-    "Numero_de_watshapp": 91149478093,
+    "Numero_de_watshapp": 91149578093,
     "Like": true,
     "Done": true, 
-    "Username": "FacuBrasla2",
+    "Username": "FacuBrasl2",
     "Password": "facu13",
     "Name_and_Lastname": "Facundo Braslavsky",
-    "Email": "facubrasl34@gmail.com",
+    "Email": "facubrasl32@gmail.com",
     "Fecha_de_nacimiento": "2007-12-05",
     "Direccion": "Cabildo"
 }
