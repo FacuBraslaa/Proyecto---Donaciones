@@ -3,6 +3,7 @@ import { v2 as cloudinaryV2 } from 'cloudinary';
 import multer from 'multer';
 import bcrypt from "bcryptjs";
 import path from "path";
+import { Console } from 'console';
 
 // Configura Cloudinary
 cloudinaryV2.config({
@@ -105,22 +106,69 @@ const actualizarFoto = async (req, res) => {
 // Crear donante (modificado para manejar la imagen)
 const createDonante = async (req, res) => {
     try {
-        const { Codigo_postal, Numero_de_watshapp, Like, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion } = req.body;
+        const {
+            Codigo_postal,
+            Numero_de_watshapp,
+            Like,
+            Done,
+            Username,
+            Password,
+            Name_and_Lastname,
+            Email,
+            Fecha_de_nacimiento,
+            Direccion
+        } = req.body;
+
+        // Verificar campos obligatorios
+        if (!Username || !Email || !Numero_de_watshapp) {
+            return res.status(400).json({
+                message: "Se requiere Username, Email y Número de WhatsApp"
+            });
+        }
+
+        // Hashear contraseña
         const hashedPassword = bcrypt.hashSync(Password, 10);
 
-        if (!Username || !Email || !Numero_de_watshapp) return res.status(400).json({ message: "Se requiere Username, Email y Número de WhatsApp" });
-        
+        // Verificar duplicados
         const duplicate = await Chekdoble(Username, Email, Numero_de_watshapp);
-       
-        if (duplicate) return res.status(400).json({ message: `${duplicate.field} ya está en uso: ${duplicate.value}` });
 
-        const query = `INSERT INTO "Donantes" ("Codigo_postal", "Numero_de_watshapp", "Like", "Done", "Username", "Password", "Name_and_Lastname", "Email", "Fecha_de_nacimiento", "Direccion") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING "ID"`;
-        const resultInsert = await pool.query(query, [Codigo_postal, Numero_de_watshapp, Like, Done, Username, hashedPassword, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion]);
-       
-        return res.json({ message: "Donante registrado correctamente", idDonante: resultInsert.rows[0].ID });
+        if (duplicate) {
+            return res.status(400).json({
+                message: `${duplicate.field} ya está en uso: ${duplicate.value}`
+            });
+        }
+
+        // Insertar donante en la base de datos
+        const query = `
+            INSERT INTO "Donantes" 
+            ("Codigo_postal", "Numero_de_watshapp", "Like", "Done", "Username", "Password", "Name_and_Lastname", "Email", "Fecha_de_nacimiento", "Direccion")
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+            RETURNING "ID"
+        `;
+        const resultInsert = await pool.query(query, [
+            Codigo_postal,
+            Numero_de_watshapp,
+            Like,
+            Done,
+            Username,
+            hashedPassword,
+            Name_and_Lastname,
+            Email,
+            Fecha_de_nacimiento,
+            Direccion
+        ]);
+
+        // Respuesta exitosa
+        return res.json({
+            message: "Donante registrado correctamente",
+            idDonante: resultInsert.rows[0].ID
+        });
     } catch (error) {
-        console.error('Error al registrar Donante:', error);
-        return res.status(500).json({ message: "Error al registrar Donante", error: error.message });
+        console.error('Error al registrar Donante:', error.message);
+        return res.status(500).json({
+            message: "Error al registrar Donante",
+            error: error.message
+        });
     }
 };
 
