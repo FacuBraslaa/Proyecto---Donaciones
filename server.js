@@ -3,12 +3,12 @@ const cors = require('cors');
 
 const app = express();
 
-// Configuración básica de CORS
+
 app.use(cors({
-    origin: 'http://127.0.0.1:5500', // Origen permitido para pruebas locales
-    methods: ['GET', 'POST', 'PUT', 'OPTIONS'], // Métodos permitidos
-    allowedHeaders: ['Content-Type', 'Authorization'], // Cabeceras permitidas
-    credentials: true, // Permitir credenciales (si se usan cookies o autenticación)
+    origin: 'http://127.0.0.1:5500', // Permitir solicitudes desde este origen
+    methods: ['GET', 'POST', 'PUT', 'OPTIONS'], // Métodos HTTP permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'], // Encabezados permitidos
+    credentials: true, // Si usas cookies o autenticación
 }));
 
 // Middleware para procesar JSON
