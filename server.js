@@ -5,11 +5,11 @@ const app = express();
 
 // Configuración básica de CORS
 app.use(cors({
-    origin: '*', // Origen permitido
-    methods: ['GET', 'POST','PUT', 'OPTIONS'], // Métodos permitidos
-     allowedHeaders : ['Content-Type','Authorization'], // Cabeceras permitidas
-     credentials : true // Permitir credenciales
-})) 
+    origin: 'http://127.0.0.1:5500', // Origen permitido para pruebas locales
+    methods: ['GET', 'POST', 'PUT', 'OPTIONS'], // Métodos permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'], // Cabeceras permitidas
+    credentials: true, // Permitir credenciales (si se usan cookies o autenticación)
+}));
 
 // Middleware para procesar JSON
 app.use(express.json());
@@ -25,4 +25,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
-
