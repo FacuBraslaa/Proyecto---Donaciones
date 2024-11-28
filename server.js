@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 
 app.use(cors({
-    origin: 'http://127.0.0.1:5500', // Permitir solicitudes desde este origen
+    origin: 'http://127.0.0.1:5500/crearcuentadonante.html', // Permitir solicitudes desde este origen
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Métodos permitidos
     allowedHeaders: ['Content-Type', 'Authorization'], // Encabezados permitidos
     credentials: true, // Si usas cookies o autenticación
