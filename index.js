@@ -15,7 +15,7 @@ const port = 3000;
 
 app.use((req, res, next) => {
     console.log('HOLAAAAA')
-    res.header('Access-Control-Allow-Origin', '*'); // Origen permitido
+    res.header('Access-Control-Allow-Origin', 'http://127.0.0.1:5500'); // Origen permitido
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Métodos permitidos
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Encabezados permitidos
     res.header('Access-Control-Allow-Credentials', 'true'); // Permitir credenciales
