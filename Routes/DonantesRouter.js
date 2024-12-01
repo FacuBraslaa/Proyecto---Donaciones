@@ -10,7 +10,7 @@ const router = express.Router();
 router.get('/', donantes.getDonantes);
 
 // Ruta para obtener un donante por ID
-router.get('/:id', validarDonanteLogueado, donantes.getDonanteById);
+router.get('/:id', donantes.getDonanteById);
 
 // Ruta para crear un nuevo donante (incluye la opción de subir una imagen de perfil)
 router.post('/', donantes.createDonante);

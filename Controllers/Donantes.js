@@ -106,6 +106,8 @@ const actualizarFoto = async (req, res) => {
 // Crear donante (modificado para manejar la imagen)
 const createDonante = async (req, res) => {
     try {
+    console.log("adasdskdbaskdjaslkjdasl",JSON.stringify( req.body))
+
         const { Codigo_postal, Numero_de_watshapp, Like, Done, Username, Password, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion } = req.body;
         const hashedPassword = bcrypt.hashSync(Password, 10);
 
@@ -117,10 +119,10 @@ const createDonante = async (req, res) => {
 
         const query = `INSERT INTO "Donantes" ("Codigo_postal", "Numero_de_watshapp", "Like", "Done", "Username", "Password", "Name_and_Lastname", "Email", "Fecha_de_nacimiento", "Direccion") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING "ID"`;
         const resultInsert = await pool.query(query, [Codigo_postal, Numero_de_watshapp, Like, Done, Username, hashedPassword, Name_and_Lastname, Email, Fecha_de_nacimiento, Direccion]);
-       console.log(anda);
+       console.log('anda');
         return res.json({ message: "Donante registrado correctamente", idDonante: resultInsert.rows[0].ID });
     } catch (error) {
-        console.log(funciona);
+        console.log('funciona');
         console.error('Error al registrar Donante:', error);
         return res.status(500).json({ message: "Error al registrar Donante", error: error.message });
     }

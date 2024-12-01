@@ -15,7 +15,7 @@ router.post('/foto/:id', upload.single('Foto_de_perfil'), ongosc.actualizarFoto)
 router.get("/", Ongosc.getOngosc);
 
 // Devolver una Ongosc por id
-router.get("/:id",validarOngoscLogueado, Ongosc.getongoscById);
+router.get("/:id", Ongosc.getongoscById);
 
 // Ruta para actualizar un donante por ID (permite actualizar la imagen de perfil)
 router.put('/:id', upload.single('Foto_de_perfil'), ongosc.updateOngosc);
